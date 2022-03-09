@@ -27,9 +27,13 @@ rule get_token = parse
   | "/*"      { comment lexbuf }
   | '+'       { PLUS }
   | '-'       { MINUS }
+  | "**"      { POWER }
   | '*'       { TIMES }
   | "&&"      { AND }
+  | "||"      { OR }
   | "<"       { LT }
+  | ">"       { GT }
+  | "km"      {KM}
   | '('       { LPAREN }
   | ')'       { RPAREN }
   | '['       { LBRACKET }

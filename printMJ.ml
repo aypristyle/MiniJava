@@ -23,8 +23,14 @@ let binop out = function
      fprintf out "*"
   | OpLt  ->
      fprintf out "<"
+  | OpGt  ->
+     fprintf out ">"
   | OpAnd ->
      fprintf out "&&"
+  | OpOr ->
+     fprintf out "||"
+  | OpPower ->
+     fprintf out "**"
 
 (** [expr out e], [expr0 out e], ..., [expr6 out e] print the expression [e]
     on the output channel [out]. [expr] is a synonym for [expr6].
@@ -76,7 +82,7 @@ and expr2 out = function
      expr1 out e
 
 and expr3 out = function
-  | EBinOp (OpMul as op, e1, e2) ->
+  | EBinOp ((OpMul |OpPower) as op, e1, e2) ->
      fprintf out "%a %a %a"
        expr3 e1
        binop op
@@ -103,7 +109,7 @@ and expr5 out = function
      expr4 out e
 
 and expr6 out = function
-  | EBinOp ((OpLt | OpAnd) as op, e1, e2) ->
+  | EBinOp ((OpLt | OpAnd | OpGt |OpOr) as op, e1, e2) ->
      fprintf out "%a %a %a"
        expr6 e1
        binop op
@@ -149,6 +155,8 @@ let typ out = function
      fprintf out "int"
   | TypBool ->
      fprintf out "boolean"
+  |TypIntKm ->
+    fprintf out "km"
   | TypIntArray ->
      fprintf out "int[]"
   | Typ id ->

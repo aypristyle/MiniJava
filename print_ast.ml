@@ -59,6 +59,8 @@ let print_list print prefix out l =
 
 (** [print_constant out c] prints the constant [c] on the output channel [out]. *)
 let print_constant out = function
+  | ConstKm k ->
+     fprintf out "ConstKm %ld" k
   | ConstBool b ->
      fprintf out "ConstBool %s" (string_of_bool b)
   | ConstInt i ->
@@ -79,8 +81,14 @@ let print_binop out = function
      fprintf out "OpMul"
   | OpLt  ->
      fprintf out "OpLt"
+  | OpGt  ->
+     fprintf out "OpGt"
   | OpAnd ->
      fprintf out "OpAnd"
+  | OpOr ->
+     fprintf out "OpOr"
+  | OpPower ->
+    fprintf out "OpPower"
 
 (** [print_expression prefix out e] prints the expression [e] on the output channel [out].
     [prefix] is the string already printed just before [e]. *)
@@ -229,6 +237,8 @@ let print_type out typ =
   match typ with
   | TypInt ->
      fprintf out "int"
+  | TypIntKm ->
+     fprintf out "km"
   | TypBool ->
      fprintf out "bool"
   | TypIntArray ->

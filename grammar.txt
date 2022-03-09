@@ -9,6 +9,7 @@ VarDeclaration ::= Type Identifier ';'
 MethodDeclaration ::= 'public' Type Identifier '(' ( Type Identifier ( ',' Type Identifier )* )? ')' '{' VarDeclaration* Statement* 'return' Expression ';' '}'
 
 Type ::= 'int' '[' ']'
+	| 'int' 'km'
         | 'boolean'
         | 'int'
         |  Identifier
@@ -20,7 +21,8 @@ Statement ::= '{' Statement* '}'
         | Identifier '=' Expression ';'
         | Identifier '[' Expression ']' '=' Expression ';'
 
-Expression ::= Expression ( '&&' | '<' | '+' | '-' | '*' ) Expression
+Expression ::= | Expression ( '**' ) Expression
+	| Expression ( '&&' | '<' | '>' | '+' | '-' | '*'| '||' | '**' ) Expression
         | Expression '[' Expression ']'
         | Expression '.' 'length'
         | Expression '.' Identifier '(' ( Expression ( ',' Expression )* )? ')'

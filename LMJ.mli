@@ -25,13 +25,18 @@ and raw_expression =
 and constant =
   | ConstBool of bool (** Boolean constant [true] or [false]. *)
   | ConstInt of int32 (** Integer constant [[-2^31, 2^31 - 1]]. *)
+  | ConstKm of int32 (** Km constant**)
 
 and binop =
-  | OpAdd (** Binary operator [+]. *)
-  | OpSub (** Binary operator [-]. *)
-  | OpMul (** Binary operator [*]. *)
-  | OpLt  (** Binary operator [<]. *)
-  | OpAnd (** Binary operator [&&]. *)
+  | OpAdd  (** Binary operator [+]. *)
+  | OpSub  (** Binary operator [-]. *)
+  |OpPower (** Power operator [**]. *) 
+  | OpMul  (** Binary operator [*]. *)
+  | OpLt   (** Binary operator [<]. *)
+  | OpGt   (** Binary operator [>]. *)
+  | OpAnd  (** Binary operator [&&]. *)
+  | OpOr   (** Binary operator [||]. *)
+  
 
 and unop = UOpNot (** Unary operator [!]. *)
 
@@ -47,6 +52,7 @@ and typ =
   | TypInt (** Type [int]. *)
   | TypBool (** Type [bool]. *)
   | TypIntArray (** Type [int[]]. *)
+  | TypIntKm    (** Type integer of km *)
   | Typ of identifier (** A class type. *)
 
 and metho = {

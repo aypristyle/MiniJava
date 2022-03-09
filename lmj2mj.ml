@@ -26,6 +26,7 @@ let translate_typ = function
 | LMJ.TypInt -> MJ.TypInt
 | LMJ.TypBool -> MJ.TypBool
 | LMJ.TypIntArray -> MJ.TypIntArray
+|LMJ.TypIntKm -> MJ.TypIntKm
 | LMJ.Typ id -> MJ.Typ (Location.content id)
 
 let translate_binding f (id, t) = (Location.content id, f t)

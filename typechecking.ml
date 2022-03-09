@@ -59,6 +59,7 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
   match typ1, typ2 with
   | TypInt, TypInt
   | TypBool, TypBool
+  | TypIntKm, TypIntKm
   | TypIntArray, TypIntArray -> true
   | Typ t1, Typ t2 -> instanceof t1 t2
   | _, _ -> false
@@ -66,6 +67,7 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
 (** [type_to_string t] converts the type [t] into a string representation. *)
 let rec type_to_string : typ -> string = function
   | TypInt -> "integer"
+  |TypIntKm -> "km"
   | TypBool -> "boolean"
   | TypIntArray -> "int[]"
   | Typ t -> Location.content t
@@ -122,6 +124,8 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   | EConst (ConstBool _) -> TypBool
 
   | EConst (ConstInt _) -> TypInt
+  
+  |EConst (ConstKm _)-> TypIntKm
 
   | EGetVar v ->
      let typ = vlookup v venv in
@@ -143,9 +147,13 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
         match op with
         | OpAdd
         | OpSub
+        | OpPower -> TypInt, TypInt
         | OpMul -> TypInt, TypInt
+        
         | OpLt  -> TypInt, TypBool
+        | OpGt  -> TypInt, TypBool
         | OpAnd -> TypBool, TypBool
+        | OpOr  -> TypBool, TypBool
       in
       typecheck_expression_expecting cenv venv vinit instanceof expected e1;
       typecheck_expression_expecting cenv venv vinit instanceof expected e2;
