@@ -68,6 +68,7 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
 (** [typ_lmj_to_tmj t] converts the [LMJ] type [t] into the equivalent [TMJ] type. *)
 let rec type_lmj_to_tmj = function
   | TypInt      -> TMJ.TypInt
+  |TypIntKm     -> TMJ.TypIntKm
   | TypBool     -> TMJ.TypBool
   | TypIntArray -> TMJ.TypIntArray
   | Typ id      -> TMJ.Typ (Location.content id)
@@ -75,6 +76,7 @@ let rec type_lmj_to_tmj = function
 (** [typ_tmj_to_lmj s e t] converts the [TMJ] type [t] into the equivalent [LMJ] type using location starting position [s] and location ending position [e]. *)
 let rec type_tmj_to_lmj startpos endpos = function
 | TMJ.TypInt      -> TypInt
+|TMJ.TypIntKm     -> TypIntKm
 | TMJ.TypBool     -> TypBool
 | TMJ.TypIntArray -> TypIntArray
 | TMJ.Typ id      -> Typ (Location.make startpos endpos id)
@@ -262,9 +264,13 @@ let rec typecheck_instruction (cenv : class_env) (venv : variable_env) (vinit : 
       let ibody', vinit = typecheck_instruction cenv venv vinit instanceof ibody in
       (TMJ.IWhile (cond', ibody'), vinit)
 
-  | ISyso e ->
+ (** | ISyso e ->
      let e' = typecheck_expression_expecting cenv venv vinit instanceof TypInt e in
      (TMJ.ISyso e', vinit)
+    **) 
+     | ISyso e ->
+     let e1 = typecheck_expression cenv venv vinit instanceof e in 
+     if e1.typ= TMJ.TypInt || e1.typ=TMJ.TypIntKm then (TMJ.ISyso e1, vinit) else error e "Not good"
 
 (** [occurences x bindings] returns the elements in [bindings] that have [x] has identifier. *)
 let occurrences (x : string) (bindings : (identifier * 'a) list) : identifier list =
