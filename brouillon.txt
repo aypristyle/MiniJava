@@ -1,0 +1,6 @@
+convertiseur
+m->km, km->m
+unité km, m (entier+unité) 2km, 3m
+heure, minutes secondes + fonction conversion
+vitesse -> fonction de conversion 
+

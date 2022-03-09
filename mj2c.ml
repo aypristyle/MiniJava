@@ -289,6 +289,7 @@ let constant2c
   | ConstBool true  -> fprintf out "1"
   | ConstBool false -> fprintf out "0"
   | ConstInt i      -> fprintf out "%ld" i
+  | ConstKm i       -> fprintf out "%ld km" i
 
 (** [binop2c out op] transpiles the binary operator [op] to C on the output channel [out]. *)
 let binop2c
@@ -297,10 +298,14 @@ let binop2c
     : unit =
   match op with
   | OpAdd -> fprintf out "+"
+  | OpPower -> fprintf out "**"
   | OpSub -> fprintf out "-"
   | OpMul -> fprintf out "*"
   | OpLt  -> fprintf out "<"
+  | OpGt  -> fprintf out ">"
   | OpAnd -> fprintf out "&&"
+  | OpOr -> fprintf out "||"
+  
 
 (** [type2c out typ] transpiles the type [typ] to C on the output channel [out]. *)
 let type2c
@@ -310,6 +315,7 @@ let type2c
   match typ with
   | TypInt -> fprintf out "int"
   | TypBool -> fprintf out "int"
+  | TypIntKm -> fprintf out "km"
   | TypIntArray -> fprintf out "struct %s*" !struct_array_name
   | Typ t -> fprintf out "struct %s*" t
 
@@ -422,7 +428,11 @@ let expr2c
        fprintf out "!(%a)"
          expr2c e
 
-    | EBinOp (op, e1, e2) ->
+    | EBinOp(OpPower, e1,e2) ->     	
+    fprintf out "(int)pow(%a,%a)"
+    	expr2c e1
+         expr2c e2
+    | EBinOp (op, e1, e2) -> 
        fprintf out "(%a %a %a)"
          expr2c e1
          binop2c op
@@ -608,6 +618,7 @@ let program2c out (p : TMJ.program) : unit =
   name2 := variant "tmp2" (!name1 :: all_variables);
   fprintf out
     "#include <stdio.h>\n\
+    #include <math.h> \n\
      #include <stdlib.h>\n\
      #include \"tgc.h\"\n\
      #pragma GCC diagnostic ignored \"-Wpointer-to-int-cast\"\n\

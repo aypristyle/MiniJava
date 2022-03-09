@@ -20,13 +20,18 @@ and raw_expression =
 and constant = LMJ.constant =
   | ConstBool of bool
   | ConstInt of int32
+  | ConstKm of int32
 
 and binop = LMJ.binop =
   | OpAdd
   | OpSub
+  | OpPower
   | OpMul
   | OpLt
+  | OpGt
   | OpAnd
+  | OpOr
+  
 
 and unop = LMJ.unop = UOpNot
 
@@ -42,6 +47,7 @@ and typ =
   | TypInt
   | TypBool
   | TypIntArray
+  | TypIntKm
   | Typ of identifier
 
 and metho = {

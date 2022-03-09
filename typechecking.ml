@@ -59,9 +59,11 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
   match typ1, typ2 with
   | TypInt, TypInt
   | TypBool, TypBool
+  | TypIntKm, TypIntKm
   | TypIntArray, TypIntArray -> true
   | Typ t1, Typ t2 -> instanceof t1 t2
   | _, _ -> false
+
 
 (** [typ_lmj_to_tmj t] converts the [LMJ] type [t] into the equivalent [TMJ] type. *)
 let rec type_lmj_to_tmj = function
@@ -82,6 +84,7 @@ let rec tmj_type_to_string : TMJ.typ -> string = function
   | TMJ.TypInt -> "integer"
   | TMJ.TypBool -> "boolean"
   | TMJ.TypIntArray -> "int[]"
+  | TMJ.TypIntKm -> "km"
   | TMJ.Typ t -> t
 
 (** [type_to_string t] converts the [LMJ] type [t] into a string representation. *)
@@ -150,6 +153,9 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
 
   | EConst (ConstInt i) ->
       mke (TMJ.EConst (ConstInt i)) TypInt
+   | EConst (ConstKm i) ->
+      mke (TMJ.EConst (ConstKm i)) TypIntKm
+
 
   | EGetVar v ->
      let typ = vlookup v venv in
@@ -171,9 +177,13 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
         match op with
         | OpAdd
         | OpSub
+        | OpPower -> TypInt, TypInt
         | OpMul -> TypInt, TypInt
+        
         | OpLt  -> TypInt, TypBool
+        | OpGt  -> TypInt, TypBool
         | OpAnd -> TypBool, TypBool
+        | OpOr  -> TypBool, TypBool
       in
       let e1' = typecheck_expression_expecting cenv venv vinit instanceof expected e1 in
       let e2' = typecheck_expression_expecting cenv venv vinit instanceof expected e2 in

@@ -8,7 +8,8 @@
 %token INTEGER BOOLEAN
 %token <string Location.t> IDENT
 %token CLASS PUBLIC STATIC VOID MAIN STRING EXTENDS RETURN
-%token PLUS MINUS TIMES NOT LT AND
+%token POWER KM
+%token PLUS MINUS TIMES NOT LT AND GT OR 
 %token COMMA SEMICOLON
 %token ASSIGN
 %token LPAREN RPAREN LBRACKET RBRACKET LBRACE RBRACE
@@ -16,11 +17,12 @@
 %token SYSO
 %token IF ELSE WHILE
 %token EOF
-
+%left OR
 %left AND
-%nonassoc LT
+%nonassoc LT GT
 %left PLUS MINUS
 %left TIMES
+%left POWER
 %nonassoc NOT
 %nonassoc DOT LBRACKET
 
@@ -108,9 +110,12 @@ expression:
    { e }
 
 raw_expression:
+
 | i = INT_CONST
    { EConst (ConstInt i) }
 
+| i=INT_CONST KM
+  {EConst (ConstKm i)}
 | b = BOOL_CONST
    { EConst (ConstBool b) }
 
@@ -144,9 +149,13 @@ raw_expression:
 %inline binop:
 | PLUS  { OpAdd }
 | MINUS { OpSub }
+| POWER { OpPower }
 | TIMES { OpMul }
 | LT    { OpLt }
+| GT    { OpGt }
 | AND   { OpAnd }
+| OR    { OpOr }
+
 
 instruction:
 | b = block
@@ -178,5 +187,7 @@ typ:
    { TypBool }
 | INTEGER LBRACKET RBRACKET
    { TypIntArray }
+|INTEGER KM
+   {TypIntKm}
 | id = IDENT
    { Typ id }

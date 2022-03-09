@@ -52,8 +52,14 @@ let print_token show_loc out = function
      fprintf out "NOT"
   | LT ->
      fprintf out "LT"
+  | GT ->
+     fprintf out "GT"
   | AND ->
      fprintf out "AND"
+  | OR ->
+     fprintf out "OR"
+  | POWER ->
+     fprintf out "POWER"
   | COMMA ->
      fprintf out "COMMA"
   | SEMICOLON ->
@@ -90,6 +96,8 @@ let print_token show_loc out = function
      fprintf out "WHILE"
   | EOF ->
      fprintf out "EOF"
+  |KM ->
+     fprintf out "KM"
 
 let print out lexbuf show_loc =
   let token = ref (Lexer.get_token lexbuf) in
