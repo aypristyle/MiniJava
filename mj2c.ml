@@ -307,6 +307,7 @@ let constant2c
   | ConstBool true  -> fprintf out "1"
   | ConstBool false -> fprintf out "0"
   | ConstInt i      -> fprintf out "%ld" i
+  | ConstKm i       -> fprintf out "%ld km" i
 
 (** [binop2c out op] transpiles the binary operator [op] to C on the output channel [out]. *)
 let binop2c

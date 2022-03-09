@@ -3,7 +3,7 @@
   let swap = List.map (fun (x, y) -> (y, x))
 %}
 
-%token <int32> INT_CONST KM_CONST
+%token <int32> INT_CONST
 %token <bool> BOOL_CONST
 %token INTEGER BOOLEAN
 %token <string Location.t> IDENT

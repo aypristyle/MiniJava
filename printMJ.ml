@@ -12,6 +12,8 @@ let constant out = function
      fprintf out "false"
   | ConstInt i ->
      fprintf out "%ld" i
+  | ConstKm i ->
+     fprintf out "%ld km " i 
 
 (** [binop out op] prints the binary operator [op] on the output channel [out]. *)
 let binop out = function
