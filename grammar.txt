@@ -10,6 +10,9 @@ MethodDeclaration ::= 'public' Type Identifier '(' ( Type Identifier ( ',' Type 
 
 Type ::= 'int' '[' ']'
 	| 'int' 'km'
+	| 'int' 'mm'
+	| 'int' 'm'
+	| 'int 'cm'
         | 'boolean'
         | 'int'
         |  Identifier

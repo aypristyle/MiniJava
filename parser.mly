@@ -8,7 +8,7 @@
 %token INTEGER BOOLEAN
 %token <string Location.t> IDENT
 %token CLASS PUBLIC STATIC VOID MAIN STRING EXTENDS RETURN
-%token POWER KM
+%token POWER KM MM CM M
 %token PLUS MINUS TIMES NOT LT AND GT OR 
 %token COMMA SEMICOLON
 %token ASSIGN
@@ -116,6 +116,16 @@ raw_expression:
 
 | i=INT_CONST KM
   {EConst (ConstKm i)}
+
+| i=INT_CONST MM
+  {EConst (ConstMm i)}  
+  
+| i=INT_CONST CM
+  {EConst (ConstCm i)}  
+  
+| i=INT_CONST M
+  {EConst (Constm i)}  
+  
 | b = BOOL_CONST
    { EConst (ConstBool b) }
 
@@ -189,5 +199,13 @@ typ:
    { TypIntArray }
 |INTEGER KM
    {TypIntKm}
+| INTEGER MM
+   {TypIntMm}
+   
+| INTEGER CM
+   {TypIntCm}
+   
+| INTEGER M
+   {TypIntm}
 | id = IDENT
    { Typ id }

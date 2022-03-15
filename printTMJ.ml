@@ -14,6 +14,12 @@ let constant out = function
      fprintf out "%ld" i
   | ConstKm i ->
      fprintf out "%ld km " i 
+  | ConstMm i ->
+     fprintf out "%ld mm " i 
+   | ConstCm i ->
+     fprintf out "%ld cm " i 
+   | Constm i ->
+     fprintf out "%ld m " i 
 
 (** [binop out op] prints the binary operator [op] on the output channel [out]. *)
 let binop out = function
@@ -160,6 +166,12 @@ let typ out = function
      fprintf out "boolean"
   |TypIntKm ->
     fprintf out "km"
+  |TypIntMm ->
+    fprintf out "mm"
+  |TypIntCm ->
+    fprintf out "cm"
+  |TypIntm ->
+    fprintf out "m"
   | TypIntArray ->
      fprintf out "int[]"
   | Typ id ->

@@ -289,7 +289,10 @@ let constant2c
   | ConstBool true  -> fprintf out "1"
   | ConstBool false -> fprintf out "0"
   | ConstInt i      -> fprintf out "%ld" i
+  | ConstMm i       -> fprintf out "%ld" i
   | ConstKm i       -> fprintf out "%ld" i
+  | Constm i       -> fprintf out "%ld" i
+  | ConstCm i       -> fprintf out "%ld" i
 
 (** [binop2c out op] transpiles the binary operator [op] to C on the output channel [out]. *)
 let binop2c
@@ -316,6 +319,9 @@ let type2c
   | TypInt -> fprintf out "int"
   | TypBool -> fprintf out "int"
   | TypIntKm -> fprintf out "km"
+  | TypIntMm -> fprintf out "mm"
+  | TypIntm -> fprintf out "m"
+  | TypIntCm -> fprintf out "cm"
   | TypIntArray -> fprintf out "struct %s*" !struct_array_name
   | Typ t -> fprintf out "struct %s*" t
 
@@ -484,6 +490,18 @@ let instr2c
     | ISyso e ->
     if e.typ=TypIntKm then 
        fprintf out "printf(\"%%d km\\n\", %a);"
+         (expr2c method_name class_info) e
+         else if e.typ=TypIntMm
+         then
+                fprintf out "printf(\"%%d mm\\n\", %a);"
+         (expr2c method_name class_info) e
+                  else if e.typ=TypIntm
+         then
+                fprintf out "printf(\"%%d m\\n\", %a);"
+         (expr2c method_name class_info) e
+                  else if e.typ=TypIntCm
+         then
+                fprintf out "printf(\"%%d cm\\n\", %a);"
          (expr2c method_name class_info) e
          else
          fprintf out "printf(\"%%d \\n\", %a);"

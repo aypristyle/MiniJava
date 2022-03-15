@@ -68,8 +68,11 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
 (** [typ_lmj_to_tmj t] converts the [LMJ] type [t] into the equivalent [TMJ] type. *)
 let rec type_lmj_to_tmj = function
   | TypInt      -> TMJ.TypInt
-  |TypIntKm     -> TMJ.TypIntKm
+  | TypIntKm     -> TMJ.TypIntKm
   | TypBool     -> TMJ.TypBool
+  | TypIntMm    -> TMJ.TypIntMm
+  | TypIntCm    -> TMJ.TypIntCm
+  | TypIntm    -> TMJ.TypIntm
   | TypIntArray -> TMJ.TypIntArray
   | Typ id      -> TMJ.Typ (Location.content id)
 
@@ -77,6 +80,9 @@ let rec type_lmj_to_tmj = function
 let rec type_tmj_to_lmj startpos endpos = function
 | TMJ.TypInt      -> TypInt
 |TMJ.TypIntKm     -> TypIntKm
+|TMJ.TypIntMm     ->TypIntMm
+|TMJ.TypIntCm     ->TypIntCm
+|TMJ.TypIntm     ->TypIntm
 | TMJ.TypBool     -> TypBool
 | TMJ.TypIntArray -> TypIntArray
 | TMJ.Typ id      -> Typ (Location.make startpos endpos id)
@@ -86,7 +92,10 @@ let rec tmj_type_to_string : TMJ.typ -> string = function
   | TMJ.TypInt -> "integer"
   | TMJ.TypBool -> "boolean"
   | TMJ.TypIntArray -> "int[]"
+  | TMJ.TypIntMm -> "mm"
   | TMJ.TypIntKm -> "km"
+  | TMJ.TypIntCm -> "cm"
+  | TMJ.TypIntm -> "m"
   | TMJ.Typ t -> t
 
 (** [type_to_string t] converts the [LMJ] type [t] into a string representation. *)
@@ -157,7 +166,12 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
       mke (TMJ.EConst (ConstInt i)) TypInt
    | EConst (ConstKm i) ->
       mke (TMJ.EConst (ConstKm i)) TypIntKm
-
+   | EConst (ConstMm i) ->
+      mke (TMJ.EConst (ConstMm i)) TypIntMm
+   | EConst (ConstCm i) ->
+      mke (TMJ.EConst (ConstCm i)) TypIntCm
+   | EConst (Constm i) ->
+      mke (TMJ.EConst (Constm i)) TypIntm
 
   | EGetVar v ->
      let typ = vlookup v venv in
@@ -270,7 +284,7 @@ let rec typecheck_instruction (cenv : class_env) (venv : variable_env) (vinit : 
     **) 
      | ISyso e ->
      let e1 = typecheck_expression cenv venv vinit instanceof e in 
-     if e1.typ= TMJ.TypInt || e1.typ=TMJ.TypIntKm then (TMJ.ISyso e1, vinit) else error e "Not good"
+     if e1.typ= TMJ.TypInt || e1.typ=TMJ.TypIntKm || e1.typ=TMJ.TypIntMm || e1.typ=TMJ.TypIntm || e1.typ=TMJ.TypIntCm then (TMJ.ISyso e1, vinit) else error e "Not good"
 
 (** [occurences x bindings] returns the elements in [bindings] that have [x] has identifier. *)
 let occurrences (x : string) (bindings : (identifier * 'a) list) : identifier list =

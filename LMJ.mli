@@ -26,6 +26,9 @@ and constant =
   | ConstBool of bool (** Boolean constant [true] or [false]. *)
   | ConstInt of int32 (** Integer constant [[-2^31, 2^31 - 1]]. *)
   | ConstKm of int32 (** Km constant**)
+  | ConstMm of int32 (** Mm constant **)
+  | ConstCm of int32 (** Cm constant **)
+  | Constm of int32 (** m constant **)
 
 and binop =
   | OpAdd  (** Binary operator [+]. *)
@@ -53,6 +56,9 @@ and typ =
   | TypBool (** Type [bool]. *)
   | TypIntArray (** Type [int[]]. *)
   | TypIntKm    (** Type integer of km *)
+  | TypIntMm    (** Type integer of mm *)
+  | TypIntCm    (** Type integer of mm *)
+  | TypIntm    (** Type integer of mm *)
   | Typ of identifier (** A class type. *)
 
 and metho = {

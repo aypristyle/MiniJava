@@ -21,6 +21,9 @@ and constant = LMJ.constant =
   | ConstBool of bool
   | ConstInt of int32
   | ConstKm of int32
+  | ConstMm of int32
+  | ConstCm of int32
+  | Constm of int32
 
 and binop = LMJ.binop =
   | OpAdd
@@ -48,6 +51,9 @@ and typ =
   | TypBool
   | TypIntArray
   | TypIntKm
+  | TypIntMm
+  | TypIntCm
+  | TypIntm
   | Typ of identifier
 
 and metho = {

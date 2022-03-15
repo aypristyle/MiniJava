@@ -33,7 +33,10 @@ rule get_token = parse
   | "||"      { OR }
   | "<"       { LT }
   | ">"       { GT }
-  | "km"      {KM}
+  | "mm"      { MM }
+  | "km"      { KM }
+  | "cm"      { CM }
+  | "m"       { M }
   | '('       { LPAREN }
   | ')'       { RPAREN }
   | '['       { LBRACKET }

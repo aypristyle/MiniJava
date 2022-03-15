@@ -98,6 +98,12 @@ let print_token show_loc out = function
      fprintf out "EOF"
   |KM ->
      fprintf out "KM"
+  |MM ->
+     fprintf out "MM"
+  |CM ->
+     fprintf out "CM"
+  |M ->
+     fprintf out "M"
 
 let print out lexbuf show_loc =
   let token = ref (Lexer.get_token lexbuf) in
