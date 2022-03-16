@@ -37,6 +37,7 @@ and binop =
   | OpMul  (** Binary operator [*]. *)
   | OpLt   (** Binary operator [<]. *)
   | OpGt   (** Binary operator [>]. *)
+  | OpEquals (** Binary operator [==]. *)
   | OpAnd  (** Binary operator [&&]. *)
   | OpOr   (** Binary operator [||]. *)
   
