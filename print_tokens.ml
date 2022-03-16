@@ -50,6 +50,8 @@ let print_token show_loc out = function
      fprintf out "TIMES"
   | NOT ->
      fprintf out "NOT"
+  | INCR ->
+     fprintf out "INCR"
   | LT ->
      fprintf out "LT"
   | GT ->
@@ -104,6 +106,14 @@ let print_token show_loc out = function
      fprintf out "CM"
   |M ->
      fprintf out "M"
+  |KG ->
+     fprintf out "KG"
+  |MG ->
+     fprintf out "MG"
+  |CG ->
+     fprintf out "CG"
+  |G ->
+     fprintf out "G"
 
 let print out lexbuf show_loc =
   let token = ref (Lexer.get_token lexbuf) in

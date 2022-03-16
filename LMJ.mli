@@ -29,6 +29,10 @@ and constant =
   | ConstMm of int32 (** Mm constant **)
   | ConstCm of int32 (** Cm constant **)
   | Constm of int32 (** m constant **)
+  | ConstKg of int32 (** Kg constant**)
+  | ConstMg of int32 (** Mg constant **)
+  | ConstCg of int32 (** Cg constant **)
+  | Constg of int32 (** g constant **)
 
 and binop =
   | OpAdd  (** Binary operator [+]. *)
@@ -41,7 +45,9 @@ and binop =
   | OpOr   (** Binary operator [||]. *)
   
 
-and unop = UOpNot (** Unary operator [!]. *)
+and unop = 
+   |UOpNot   (** Unary operator [!]. *)
+   |UopIncr  (** Incremetal operator [++]. *)
 
 and instruction =
   | IBlock of instruction list (** [IBlock [i1; i2; ...; in]] represents the instruction [{ i1 i2 ... in }]. *)
@@ -57,8 +63,12 @@ and typ =
   | TypIntArray (** Type [int[]]. *)
   | TypIntKm    (** Type integer of km *)
   | TypIntMm    (** Type integer of mm *)
-  | TypIntCm    (** Type integer of mm *)
-  | TypIntm    (** Type integer of mm *)
+  | TypIntCm    (** Type integer of cm *)
+  | TypIntm     (** Type integer of m *)
+  | TypIntKg    (** Type integer of kg *)
+  | TypIntMg    (** Type integer of mg *)
+  | TypIntCg    (** Type integer of cg *)
+  | TypIntg    (** Type integer of g *)
   | Typ of identifier (** A class type. *)
 
 and metho = {

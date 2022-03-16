@@ -25,6 +25,7 @@ rule get_token = parse
   | '\n'      { newline lexbuf; get_token lexbuf }
   | space+    { get_token lexbuf }
   | "/*"      { comment lexbuf }
+  | "++"      { INCR }
   | '+'       { PLUS }
   | '-'       { MINUS }
   | "**"      { POWER }
@@ -37,6 +38,10 @@ rule get_token = parse
   | "km"      { KM }
   | "cm"      { CM }
   | "m"       { M }
+  | "mg"      { MG }
+  | "kg"      { KG }
+  | "cg"      { CG }
+  | "g"       { G }
   | '('       { LPAREN }
   | ')'       { RPAREN }
   | '['       { LBRACKET }

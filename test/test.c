@@ -1,11 +1,19 @@
 /*
-class Print42 {
+class Factorial {
   public static void main(String[] a) {
-    if (2 > 1 || 1 > 2) System.out.println(2 mm );
-    else System.out.println(0);
+    {
+      System.out.println(new Fac().computeFac(10));
+      System.out.println(new Fac().computeFac(42));
+    }
   }
 }
-*/
+class Fac {
+  public int computeFac(int num) {
+    int numAux;
+    numAux = 1;
+    return numAux++;
+  }
+}*/
 #include <stdio.h>
 #include <math.h> 
 #include <stdlib.h>
@@ -14,10 +22,23 @@ class Print42 {
 #pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
 struct array { int* array; int length; };
 tgc_t gc;
+struct Fac;
+void* Fac_computeFac(struct Fac* this, int num);
+struct Fac {
+  void* (**vtable)();
+};
+void* (*Fac_vtable[])() = { Fac_computeFac };
+void* Fac_computeFac(struct Fac* this, int num) {
+  int numAux;
+  numAux = 1;
+  return (void*)(++(numAux));
+}
 int main(int argc, char *argv[]) {
   tgc_start(&gc, &argc);
-  if (((2 > 1) || (1 > 2))) printf("%d km\n", 2);
-  else printf("%d \n", 0);
+  {
+    printf("%d \n", ({ struct Fac* tmp1 = ({ struct Fac* res = tgc_calloc(({ extern tgc_t gc; &gc; }), 1, sizeof(*res)); res->vtable = Fac_vtable; res; }); (int) tmp1->vtable[0](tmp1, 10); }));
+    printf("%d \n", ({ struct Fac* tmp1 = ({ struct Fac* res = tgc_calloc(({ extern tgc_t gc; &gc; }), 1, sizeof(*res)); res->vtable = Fac_vtable; res; }); (int) tmp1->vtable[0](tmp1, 42); }));
+  }
   tgc_stop(&gc);
 
   return 0;

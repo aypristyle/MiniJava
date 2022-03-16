@@ -30,6 +30,10 @@ let translate_typ = function
 | LMJ.TypIntMm -> MJ.TypIntMm
 | LMJ.TypIntm -> MJ.TypIntm
 | LMJ.TypIntCm -> MJ.TypIntCm
+| LMJ.TypIntKg -> MJ.TypIntKg
+| LMJ.TypIntMg -> MJ.TypIntMg
+| LMJ.TypIntg -> MJ.TypIntg
+| LMJ.TypIntCg -> MJ.TypIntCg
 | LMJ.Typ id -> MJ.Typ (Location.content id)
 
 let translate_binding f (id, t) = (Location.content id, f t)

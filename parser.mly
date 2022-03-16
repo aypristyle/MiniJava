@@ -8,7 +8,8 @@
 %token INTEGER BOOLEAN
 %token <string Location.t> IDENT
 %token CLASS PUBLIC STATIC VOID MAIN STRING EXTENDS RETURN
-%token POWER KM MM CM M
+%token INCR
+%token POWER KM MM CM M KG MG CG G
 %token PLUS MINUS TIMES NOT LT AND GT OR 
 %token COMMA SEMICOLON
 %token ASSIGN
@@ -17,6 +18,7 @@
 %token SYSO
 %token IF ELSE WHILE
 %token EOF
+
 %left OR
 %left AND
 %nonassoc LT GT
@@ -24,6 +26,7 @@
 %left TIMES
 %left POWER
 %nonassoc NOT
+%nonassoc INCR
 %nonassoc DOT LBRACKET
 
 %start program
@@ -126,6 +129,19 @@ raw_expression:
 | i=INT_CONST M
   {EConst (Constm i)}  
   
+
+| i=INT_CONST KG
+  {EConst (ConstKg i)}
+
+| i=INT_CONST MG
+  {EConst (ConstMg i)}  
+  
+| i=INT_CONST CG
+  {EConst (ConstCg i)}  
+  
+| i=INT_CONST G
+  {EConst (Constg i)}  
+  
 | b = BOOL_CONST
    { EConst (ConstBool b) }
 
@@ -155,7 +171,8 @@ raw_expression:
 
 | NOT e = expression
    { EUnOp (UOpNot, e) }
-
+| e  = expression INCR
+  { EUnOp (UopIncr,e)}
 %inline binop:
 | PLUS  { OpAdd }
 | MINUS { OpSub }
@@ -197,6 +214,7 @@ typ:
    { TypBool }
 | INTEGER LBRACKET RBRACKET
    { TypIntArray }
+   
 |INTEGER KM
    {TypIntKm}
 | INTEGER MM
@@ -207,5 +225,17 @@ typ:
    
 | INTEGER M
    {TypIntm}
+   
+ |INTEGER KG
+   {TypIntKg}
+| INTEGER MG
+   {TypIntMg}
+   
+| INTEGER CG
+   {TypIntCg}
+   
+| INTEGER G
+   {TypIntg}
+
 | id = IDENT
    { Typ id }

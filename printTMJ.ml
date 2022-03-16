@@ -21,6 +21,15 @@ let constant out = function
    | Constm i ->
      fprintf out "%ld m " i 
 
+  | ConstKg i ->
+     fprintf out "%ld kg " i 
+  | ConstMg i ->
+     fprintf out "%ld mg " i 
+   | ConstCg i ->
+     fprintf out "%ld cg " i 
+   | Constg i ->
+     fprintf out "%ld g " i 
+
 (** [binop out op] prints the binary operator [op] on the output channel [out]. *)
 let binop out = function
   | OpAdd ->
@@ -85,6 +94,9 @@ and expr1 out e = match e.raw_expression with
 and expr2 out e = match e.raw_expression with
   | EUnOp (UOpNot, e) ->
      fprintf out "!%a"
+       expr2 e
+  | EUnOp (UopIncr, e) ->
+     fprintf out "%a++"
        expr2 e
   | _ ->
      expr1 out e
@@ -172,6 +184,14 @@ let typ out = function
     fprintf out "cm"
   |TypIntm ->
     fprintf out "m"
+  |TypIntKg ->
+    fprintf out "kg"
+  |TypIntMg ->
+    fprintf out "mg"
+  |TypIntCg ->
+    fprintf out "cg"
+  |TypIntg ->
+    fprintf out "g"
   | TypIntArray ->
      fprintf out "int[]"
   | Typ id ->

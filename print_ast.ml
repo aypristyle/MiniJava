@@ -59,8 +59,7 @@ let print_list print prefix out l =
 
 (** [print_constant out c] prints the constant [c] on the output channel [out]. *)
 let print_constant out = function
-  | ConstKm k ->
-     fprintf out "ConstKm %ld" k
+
   | ConstBool b ->
      fprintf out "ConstBool %s" (string_of_bool b)
   | ConstInt i ->
@@ -71,11 +70,23 @@ let print_constant out = function
      fprintf out "ConstCm %ld" k
   | Constm k ->
      fprintf out "Constm %ld" k
+  | ConstKm k ->
+     fprintf out "ConstKm %ld" k
+  | ConstMg k ->
+     fprintf out "ConstMg %ld" k
+  | ConstCg k ->
+     fprintf out "ConstCg %ld" k
+  | Constg k ->
+     fprintf out "Constg %ld" k
+  | ConstKg k ->
+     fprintf out "ConstKg %ld" k
 
 (** [print_unop out op] prints the unary operator [op] on the output channel [out]. *)
 let print_unop out = function
   | UOpNot ->
      fprintf out "UOpNot"
+  | UopIncr ->
+     fprintf out "UopIncr"
 
 (** [print_binop out op] prints the binary operator [op] on the output channel [out]. *)
 let print_binop out = function
@@ -251,6 +262,14 @@ let print_type out typ =
      fprintf out "cm"
   | TypIntm ->
      fprintf out "m"
+  | TypIntKg ->
+     fprintf out "kg"
+  | TypIntMg ->
+     fprintf out "mg"
+  | TypIntCg ->
+     fprintf out "cg"
+  | TypIntg ->
+     fprintf out "g"
   | TypBool ->
      fprintf out "bool"
   | TypIntArray ->

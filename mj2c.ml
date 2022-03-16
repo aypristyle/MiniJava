@@ -293,6 +293,10 @@ let constant2c
   | ConstKm i       -> fprintf out "%ld" i
   | Constm i       -> fprintf out "%ld" i
   | ConstCm i       -> fprintf out "%ld" i
+  | ConstMg i       -> fprintf out "%ld" i
+  | ConstKg i       -> fprintf out "%ld" i
+  | Constg i       -> fprintf out "%ld" i
+  | ConstCg i       -> fprintf out "%ld" i
 
 (** [binop2c out op] transpiles the binary operator [op] to C on the output channel [out]. *)
 let binop2c
@@ -322,6 +326,10 @@ let type2c
   | TypIntMm -> fprintf out "mm"
   | TypIntm -> fprintf out "m"
   | TypIntCm -> fprintf out "cm"
+  | TypIntKg -> fprintf out "kg"
+  | TypIntMg -> fprintf out "mg"
+  | TypIntg -> fprintf out "g"
+  | TypIntCg -> fprintf out "cg"
   | TypIntArray -> fprintf out "struct %s*" !struct_array_name
   | Typ t -> fprintf out "struct %s*" t
 
@@ -433,6 +441,10 @@ let expr2c
     | EUnOp (UOpNot, e) ->
        fprintf out "!(%a)"
          expr2c e
+         
+    | EUnOp (UopIncr, e) ->
+       fprintf out "++(%a)"
+         expr2c e
 
     | EBinOp(OpPower, e1,e2) ->     	
     fprintf out "(int)pow(%a,%a)"
@@ -503,6 +515,23 @@ let instr2c
          then
                 fprintf out "printf(\"%%d cm\\n\", %a);"
          (expr2c method_name class_info) e
+ 	 else if e.typ=TypIntMg
+         then
+                fprintf out "printf(\"%%d mg\\n\", %a);"
+         (expr2c method_name class_info) e
+                  else if e.typ=TypIntg
+         then
+                fprintf out "printf(\"%%d g\\n\", %a);"
+         (expr2c method_name class_info) e
+                  else if e.typ=TypIntCg
+         then
+                fprintf out "printf(\"%%d cm\\n\", %a);"
+         (expr2c method_name class_info) e
+                         else if e.typ=TypIntKg
+         then
+                fprintf out "printf(\"%%d kg\\n\", %a);"
+         (expr2c method_name class_info) e
+ 
          else
          fprintf out "printf(\"%%d \\n\", %a);"
          (expr2c method_name class_info) e
