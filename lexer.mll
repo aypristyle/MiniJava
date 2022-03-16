@@ -34,6 +34,7 @@ rule get_token = parse
   | "||"      { OR }
   | "<"       { LT }
   | ">"       { GT }
+  | "=="       { EQUALS }
   | "mm"      { MM }
   | "km"      { KM }
   | "cm"      { CM }

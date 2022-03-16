@@ -10,7 +10,7 @@
 %token CLASS PUBLIC STATIC VOID MAIN STRING EXTENDS RETURN
 %token INCR
 %token POWER KM MM CM M KG MG CG G
-%token PLUS MINUS TIMES NOT LT AND GT OR 
+%token PLUS MINUS TIMES NOT LT AND GT OR EQUALS
 %token COMMA SEMICOLON
 %token ASSIGN
 %token LPAREN RPAREN LBRACKET RBRACKET LBRACE RBRACE
@@ -180,6 +180,7 @@ raw_expression:
 | TIMES { OpMul }
 | LT    { OpLt }
 | GT    { OpGt }
+| EQUALS { OpEquals }
 | AND   { OpAnd }
 | OR    { OpOr }
 

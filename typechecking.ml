@@ -218,6 +218,13 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
       let e' = typecheck_expression_expecting cenv venv vinit instanceof expected e in
       mke (TMJ.EUnOp (op, e')) returned
 
+   | EBinOp (OpEquals, e1, e2) -> 
+  	let e1' = typecheck_expression cenv venv vinit instanceof  e1 in 
+  	let e2' = typecheck_expression cenv venv vinit instanceof  e2 in
+  	let t1 = type_tmj_to_lmj(Location.startpos e1) (Location.endpos e1) e1'.typ in
+  	let t2 = type_tmj_to_lmj(Location.startpos e2) (Location.endpos e2) e2'.typ in
+  	if compatible t1 t2 instanceof || compatible t2 t1 instanceof then mke (TMJ.EBinOp(OpEquals, e1', e2')) TypBool else error e "The two expressions have different types"
+  	
   | EBinOp (op, e1, e2) ->
       let expected, returned =
         match op with
@@ -225,9 +232,9 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
         | OpSub
         | OpPower -> TypInt, TypInt
         | OpMul -> TypInt, TypInt
-        
         | OpLt  -> TypInt, TypBool
         | OpGt  -> TypInt, TypBool
+        | OpEquals -> assert false
         | OpAnd -> TypBool, TypBool
         | OpOr  -> TypBool, TypBool
       in
