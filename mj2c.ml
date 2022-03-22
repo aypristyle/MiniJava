@@ -297,6 +297,14 @@ let constant2c
   | ConstKg i       -> fprintf out "%ld" i
   | Constg i       -> fprintf out "%ld" i
   | ConstCg i       -> fprintf out "%ld" i
+  | ConstMl i       -> fprintf out "%ld" i
+  | ConstKl i       -> fprintf out "%ld" i
+  | Constl i       -> fprintf out "%ld" i
+  | ConstCl i       -> fprintf out "%ld" i
+  | ConstH i       -> fprintf out "%ld" i
+  | ConstMin i       -> fprintf out "%ld" i
+  | ConstS i       -> fprintf out "%ld" i
+  
 
 (** [binop2c out op] transpiles the binary operator [op] to C on the output channel [out]. *)
 let binop2c
@@ -308,6 +316,8 @@ let binop2c
   | OpPower -> fprintf out "**"
   | OpSub -> fprintf out "-"
   | OpMul -> fprintf out "*"
+  | OpDiv -> fprintf out "/"
+  | OpDivEnt -> fprintf out "//"
   | OpLt  -> fprintf out "<"
   | OpGt  -> fprintf out ">"
   | OpAnd -> fprintf out "&&"
@@ -331,6 +341,13 @@ let type2c
   | TypIntMg -> fprintf out "mg"
   | TypIntg -> fprintf out "g"
   | TypIntCg -> fprintf out "cg"
+  | TypIntKl -> fprintf out "kl"
+  | TypIntMl -> fprintf out "ml"
+  | TypIntl -> fprintf out "l"
+  | TypIntCl -> fprintf out "cl"
+  | TypIntS -> fprintf out "s"
+  | TypIntMin -> fprintf out "min"
+  | TypIntH -> fprintf out "h"
   | TypIntArray -> fprintf out "struct %s*" !struct_array_name
   | Typ t -> fprintf out "struct %s*" t
 
@@ -444,7 +461,11 @@ let expr2c
          expr2c e
          
     | EUnOp (UopIncr, e) ->
-       fprintf out "++(%a)"
+       fprintf out "(%a)--"
+         expr2c e
+
+    | EUnOp (UopDecr, e) ->
+       fprintf out "(%a)--"
          expr2c e
 
     | EBinOp(OpPower, e1,e2) ->     	

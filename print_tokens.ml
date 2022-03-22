@@ -32,6 +32,8 @@ let print_token show_loc out = function
      fprintf out "PUBLIC"
   | STATIC ->
      fprintf out "STATIC"
+  | EQUALS ->
+     fprintf out "EQUALS"
   | VOID ->
      fprintf out "VOID"
   | MAIN ->
@@ -62,6 +64,11 @@ let print_token show_loc out = function
      fprintf out "OR"
   | POWER ->
      fprintf out "POWER"
+  | DIV ->
+     fprintf out "DIV"
+  | DIVENT ->
+     fprintf out "DIVENT"
+        
   | COMMA ->
      fprintf out "COMMA"
   | SEMICOLON ->
@@ -114,6 +121,24 @@ let print_token show_loc out = function
      fprintf out "CG"
   |G ->
      fprintf out "G"
+     
+  |KL ->
+     fprintf out "KL"
+  |ML ->
+     fprintf out "ML"
+  |CL ->
+     fprintf out "CL"
+  |L ->
+     fprintf out "L"
+     
+  |MIN ->
+     fprintf out "MIN"
+  |S ->
+     fprintf out "S"
+  |H ->
+     fprintf out "H"
+  |DECR ->
+  	fprintf out "DECR"
 
 let print out lexbuf show_loc =
   let token = ref (Lexer.get_token lexbuf) in

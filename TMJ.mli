@@ -28,6 +28,13 @@ and constant = LMJ.constant =
   | ConstMg of int32
   | ConstCg of int32
   | Constg of int32
+  | ConstKl of int32
+  | ConstMl of int32
+  | ConstCl of int32
+  | Constl of int32
+  | ConstH of int32
+  | ConstMin of int32
+    | ConstS of int32
 
 and binop = LMJ.binop =
   | OpAdd
@@ -39,11 +46,14 @@ and binop = LMJ.binop =
   | OpEquals
   | OpAnd
   | OpOr
+  |OpDiv
+  |OpDivEnt
   
 
 and unop = LMJ.unop = 
   |UOpNot
   |UopIncr
+  |UopDecr
 
 and instruction =
   | IBlock of instruction list
@@ -65,6 +75,13 @@ and typ =
   | TypIntMg
   | TypIntCg
   | TypIntg
+  | TypIntKl
+  | TypIntMl
+  | TypIntCl
+  | TypIntl
+  | TypIntH
+  | TypIntMin
+  | TypIntS
   | Typ of identifier
 
 and metho = {

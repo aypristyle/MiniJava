@@ -76,14 +76,26 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
 let rec type_lmj_to_tmj = function
   | TypInt      -> TMJ.TypInt
   | TypBool     -> TMJ.TypBool
+  
   | TypIntMm    -> TMJ.TypIntMm
   | TypIntCm    -> TMJ.TypIntCm
   | TypIntm    -> TMJ.TypIntm
   | TypIntKm     -> TMJ.TypIntKm
+  
   | TypIntMg    -> TMJ.TypIntMg
   | TypIntCg    -> TMJ.TypIntCg
   | TypIntg    -> TMJ.TypIntg
   | TypIntKg     -> TMJ.TypIntKg
+  
+  | TypIntMl    -> TMJ.TypIntMl
+  | TypIntCl    -> TMJ.TypIntCl
+  | TypIntl    -> TMJ.TypIntl
+  | TypIntKl     -> TMJ.TypIntKl
+  
+  | TypIntS    -> TMJ.TypIntS
+  | TypIntMin    -> TMJ.TypIntMin
+  | TypIntH    -> TMJ.TypIntH
+  
   | TypIntArray -> TMJ.TypIntArray
   | Typ id      -> TMJ.Typ (Location.content id)
 
@@ -91,13 +103,24 @@ let rec type_lmj_to_tmj = function
 let rec type_tmj_to_lmj startpos endpos = function
 | TMJ.TypInt      -> TypInt
 |TMJ.TypIntKm     -> TypIntKm
-|TMJ.TypIntMm     ->TypIntMm
-|TMJ.TypIntCm     ->TypIntCm
-|TMJ.TypIntm     ->TypIntm
+|TMJ.TypIntMm     -> TypIntMm
+|TMJ.TypIntCm     -> TypIntCm
+|TMJ.TypIntm      -> TypIntm
+
 |TMJ.TypIntKg     -> TypIntKg
-|TMJ.TypIntMg     ->TypIntMg
-|TMJ.TypIntCg     ->TypIntCg
-|TMJ.TypIntg     ->TypIntg
+|TMJ.TypIntMg     -> TypIntMg
+|TMJ.TypIntCg     -> TypIntCg
+|TMJ.TypIntg      -> TypIntg
+
+|TMJ.TypIntKl     -> TypIntKl
+|TMJ.TypIntMl     -> TypIntMl
+|TMJ.TypIntCl     -> TypIntCl
+|TMJ.TypIntl      -> TypIntl
+
+|TMJ.TypIntH      -> TypIntH
+|TMJ.TypIntS      ->TypIntS
+|TMJ.TypIntMin    ->TypIntMin
+
 | TMJ.TypBool     -> TypBool
 | TMJ.TypIntArray -> TypIntArray
 | TMJ.Typ id      -> Typ (Location.make startpos endpos id)
@@ -111,10 +134,21 @@ let rec tmj_type_to_string : TMJ.typ -> string = function
   | TMJ.TypIntKm -> "km"
   | TMJ.TypIntCm -> "cm"
   | TMJ.TypIntm -> "m"
+  
   | TMJ.TypIntMg -> "mg"
   | TMJ.TypIntKg -> "kg"
   | TMJ.TypIntCg -> "cg"
   | TMJ.TypIntg -> "g"
+  
+  | TMJ.TypIntMl -> "ml"
+  | TMJ.TypIntKl -> "kl"
+  | TMJ.TypIntCl -> "cl"
+  | TMJ.TypIntl -> "l"
+  
+  | TMJ.TypIntMin -> "min"
+  | TMJ.TypIntH -> "h"
+  | TMJ.TypIntS -> "s"
+  
   | TMJ.Typ t -> t
 
 (** [type_to_string t] converts the [LMJ] type [t] into a string representation. *)
@@ -201,6 +235,22 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
       mke (TMJ.EConst (ConstCg i)) TypIntCg
    | EConst (Constg i) ->
       mke (TMJ.EConst (Constg i)) TypIntg
+      
+   | EConst (ConstKl i) ->
+      mke (TMJ.EConst (ConstKl i)) TypIntKl
+   | EConst (ConstMl i) ->
+      mke (TMJ.EConst (ConstMl i)) TypIntMl
+   | EConst (ConstCl i) ->
+      mke (TMJ.EConst (ConstCl i)) TypIntCl
+   | EConst (Constl i) ->
+      mke (TMJ.EConst (Constl i)) TypIntl
+      
+   | EConst (ConstS i) ->
+      mke (TMJ.EConst (ConstS i)) TypIntS
+   | EConst (ConstMin i) ->
+      mke (TMJ.EConst (ConstMin i)) TypIntMin
+   | EConst (ConstH i) ->
+      mke (TMJ.EConst (ConstH i)) TypIntH
 
   | EGetVar v ->
      let typ = vlookup v venv in
@@ -214,6 +264,7 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
         match op with
         | UOpNot -> TypBool, TypBool
         | UopIncr -> TypInt, TypInt
+        | UopDecr -> TypInt, TypInt
       in
       let e' = typecheck_expression_expecting cenv venv vinit instanceof expected e in
       mke (TMJ.EUnOp (op, e')) returned
@@ -231,6 +282,8 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
         | OpAdd
         | OpSub
         | OpPower -> TypInt, TypInt
+        | OpDiv -> TypInt, TypInt
+        | OpDivEnt -> TypInt, TypInt
         | OpMul -> TypInt, TypInt
         | OpLt  -> TypInt, TypBool
         | OpGt  -> TypInt, TypBool
