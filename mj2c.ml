@@ -472,6 +472,30 @@ let expr2c
     fprintf out "(int)pow(%a,%a)"
     	expr2c e1
          expr2c e2
+         
+    | EBinOp (OpAdd, e1, e2) -> 
+    (*pattern matching pour vérifier le types des paramètres de OpAdd pour pas qu'on convertisse à chaque addition*)
+    	begin
+    	 match e1.typ,e2.typ with 
+    		| TypIntKm,TypIntKm | TypIntm, TypIntm | TypIntKg,TypIntKg | TypIntg,TypIntg -> fprintf out "(%a %a %a)"
+         				expr2c e1
+        				binop2c OpAdd
+         				expr2c e2
+         				
+         	| TypIntKm,TypIntm | TypIntKg,TypIntg -> fprintf out "((%a)*1000 %a %a)"
+         				expr2c e1
+        				binop2c OpAdd
+         				expr2c e2
+         	
+         	
+         	| TypIntm,TypIntKm | TypIntg,TypIntKg -> fprintf out "(%a %a (%a)*1000)"
+         				expr2c e1
+        				binop2c OpAdd
+         				expr2c e2
+         				
+         	
+         end
+         
     | EBinOp (op, e1, e2) -> 
        fprintf out "(%a %a %a)"
          expr2c e1

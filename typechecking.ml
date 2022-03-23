@@ -61,10 +61,12 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
   | TypBool, TypBool
   | TypIntKm, TypIntKm
   | TypIntm, TypIntm
+  | TypIntKm, TypIntm
   | TypIntCm, TypIntCm
   | TypIntMm, TypIntMm
   | TypIntKg, TypIntKg
   | TypIntg, TypIntg
+  | TypIntKg, TypIntg
   | TypIntCg, TypIntCg
   | TypIntMg, TypIntMg
   | TypIntArray, TypIntArray -> true
@@ -276,6 +278,20 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   	let t2 = type_tmj_to_lmj(Location.startpos e2) (Location.endpos e2) e2'.typ in
   	if compatible t1 t2 instanceof || compatible t2 t1 instanceof then mke (TMJ.EBinOp(OpEquals, e1', e2')) TypBool else error e "The two expressions have different types"
   	
+  | EBinOp ((OpAdd), e1, e2) -> 
+  	let e1' = typecheck_expression cenv venv vinit instanceof  e1 in 
+  	let e2' = typecheck_expression cenv venv vinit instanceof  e2 in
+  	let t = match e1'.typ, e2'.typ with
+  	(*on vérifie les types des paramètres en entrée pour traiter le cas où on aurait une addition de km et m => on veut retourner des m*)
+  		| _,TypIntm | TypIntm,_ -> TypIntm
+  		| TypIntKm,TypIntKm  -> TypIntKm 
+  		| _,TypIntg | TypIntg,_ -> TypIntg
+  		| TypIntKg,TypIntKg  -> TypIntKg
+  		| TypInt, TypInt -> TypInt 
+  		| _ -> error e "The two expressions have uncompatible types, hence no addition possible" in
+  		mke (TMJ.EBinOp(OpAdd, e1', e2')) t 
+  	
+ 
   | EBinOp (op, e1, e2) ->
       let expected, returned =
         match op with
