@@ -81,3 +81,15 @@ to go back to the version with a garbage collector do the following.
 git checkout master
 make
 ```
+
+### Nos ajouts
+
+Nous avons décidé d'ajouter de quoi faire des calculs simples avec diverses unités.
+Pour ce faire nous avons rajouter des opérateurs, tel que le plus petit ou égal, égal le ou et l'incrémentation et la décrémentation d'une valeur
+Nous avons aussi ajouter des unités 
+- de poids kg, g, cg, mg
+- de longeurs km, m, cm, mm
+- de volume kl, l, cl, ml
+- d'horaires, heures, minutes, secondes
+
+Pour finir notre compilateur permet, d'ajouter, de multiplier et même de mettre a la puissance des conversions dans ces différentes unités, avec un système de conversion automatique.
