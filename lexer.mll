@@ -70,7 +70,6 @@ rule get_token = parse
   | "new"     { NEW }
   | "this"    { THIS }
   | "length"  { LENGTH }
-  | "to_km"   { TO_KM }
   | "System.out.println" { SYSO }
   | "if"    { IF }
   | "else"  { ELSE }

@@ -20,7 +20,7 @@ Type ::= 'int' '[' ']'
 Statement ::= '{' Statement* '}'
         | 'if' '(' Expression ')' Statement 'else' Statement
         | 'while' '(' Expression ')' Statement
-        | ('System.out.println'|'to_km) '(' Expression ')' ';'
+        | 'System.out.println' '(' Expression ')' ';'
         | Identifier '=' Expression ';'
         | Identifier '[' Expression ']' '=' Expression ';'
 

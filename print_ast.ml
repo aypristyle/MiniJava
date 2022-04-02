@@ -203,11 +203,6 @@ let rec print_instruction prefix out i =
        prefix'
        branch_end
        (print_expression prefix') e
-  | To_Km e ->
-     fprintf out "to_km\n%s%s%a"
-       prefix'
-       branch_end
-       (print_expression prefix') e
   | IBlock l ->
      fprintf out "IBlock\n%a"
        (print_instruction_list prefix) l

@@ -499,10 +499,7 @@ let instr2c
        fprintf out "{%a%t}"
          (indent indentation (sep_list nl instr2c)) is
          nl
-    | To_Km e ->
-    	if e.typ=TypIntMm then 
-    		 fprintf out "printf(\"%%d *100 km\\n\", %a);"
-         (expr2c method_name class_info) e 
+
     | ISyso e ->
     if e.typ=TypIntKm then 
        fprintf out "printf(\"%%d km\\n\", %a);"
