@@ -11,6 +11,7 @@
 %token INCR DECR
 %token POWER KM MM CM M KG MG CG G KL ML CL L S H MIN
 %token PLUS MINUS TIMES NOT LT AND GT OR EQUALS DIV DIVENT TO_KM
+
 %token COMMA SEMICOLON
 %token ASSIGN
 %token LPAREN RPAREN LBRACKET RBRACKET LBRACE RBRACE
@@ -18,17 +19,16 @@
 %token SYSO
 %token IF ELSE WHILE
 %token EOF
+
 %left OR
 %left AND
-%left EQUALS
-%nonassoc LT GT 
+%nonassoc LT GT
 %left PLUS MINUS
 %left TIMES
-%left DIV DIVENT
 %left POWER
 %left TO_KM
 %nonassoc NOT
-%nonassoc INCR DECR
+%nonassoc INCR
 %nonassoc DOT LBRACKET
 
 %start program
@@ -143,28 +143,6 @@ raw_expression:
   
 | i=INT_CONST G
   {EConst (Constg i)}  
-
-| i=INT_CONST KL
-  {EConst (ConstKl i)}
-
-| i=INT_CONST ML
-  {EConst (ConstMl i)}  
-  
-| i=INT_CONST CL
-  {EConst (ConstCl i)}  
-  
-| i=INT_CONST L
-  {EConst (Constl i)}  
-  
-| i=INT_CONST S
-  {EConst (ConstS i)}  
-  
-| i=INT_CONST H
-  {EConst (ConstH i)}  
-  
-| i=INT_CONST MIN
-  {EConst (ConstMin i)} 
-
   
 | b = BOOL_CONST
    { EConst (ConstBool b) }
@@ -197,8 +175,6 @@ raw_expression:
    { EUnOp (UOpNot, e) }
 | e  = expression INCR
   { EUnOp (UopIncr,e)}
-| e  = expression DECR
-  { EUnOp (UopDecr,e)}
 %inline binop:
 | PLUS  { OpAdd }
 | MINUS { OpSub }
@@ -209,8 +185,6 @@ raw_expression:
 | EQUALS { OpEquals }
 | AND   { OpAnd }
 | OR    { OpOr }
-| DIV   {OpDiv }
-|DIVENT {OpDivEnt }
 
 
 instruction:
@@ -258,7 +232,7 @@ typ:
 | INTEGER M
    {TypIntm}
    
-|INTEGER KG
+ |INTEGER KG
    {TypIntKg}
 | INTEGER MG
    {TypIntMg}
@@ -268,28 +242,6 @@ typ:
    
 | INTEGER G
    {TypIntg}
-   
-|INTEGER KL
-   {TypIntKl}
-
-| INTEGER ML
-   {TypIntMl}
-   
-| INTEGER CL
-   {TypIntCl}
-   
-| INTEGER L
-   {TypIntl}
-
-| INTEGER H
-   {TypIntH}
-   
-| INTEGER MIN
-   {TypIntMin}
-   
-| INTEGER S
-   {TypIntS}
-
 
 | id = IDENT
    { Typ id }

@@ -33,13 +33,6 @@ and constant =
   | ConstMg of int32 (** Mg constant **)
   | ConstCg of int32 (** Cg constant **)
   | Constg of int32 (** g constant **)
-  | ConstKl of int32 (** Kl constant**)
-  | ConstMl of int32 (** Ml constant **)
-  | ConstCl of int32 (** Cl constant **)
-  | Constl of int32 (** l constant **)
-  | ConstH of int32 (** hour constant **)
-  | ConstMin of int32 (** min constant **)
-  | ConstS of int32 (** seconds constant **)
 
 and binop =
   | OpAdd  (** Binary operator [+]. *)
@@ -51,14 +44,11 @@ and binop =
   | OpEquals (** Binary operator [==]. *)
   | OpAnd  (** Binary operator [&&]. *)
   | OpOr   (** Binary operator [||]. *)
-  | OpDiv (** Binary operator [/].   *)
-  | OpDivEnt (** Binary operator [//]. *)
   
 
 and unop = 
    |UOpNot   (** Unary operator [!]. *)
    |UopIncr  (** Incremetal operator [++]. *)
-   |UopDecr  (** Incremetal operator [++]. *)
 
 and instruction =
   | IBlock of instruction list (** [IBlock [i1; i2; ...; in]] represents the instruction [{ i1 i2 ... in }]. *)
@@ -81,13 +71,6 @@ and typ =
   | TypIntMg    (** Type integer of mg *)
   | TypIntCg    (** Type integer of cg *)
   | TypIntg    (** Type integer of g *)
-  | TypIntKl    (** Type integer of kl *)
-  | TypIntMl    (** Type integer of ml *)
-  | TypIntCl    (** Type integer of cl *)
-  | TypIntl    (** Type integer of l *)
-  | TypIntS   (** Type integer of seconds *)
-  | TypIntMin   (** Type integer of minutes *)
-  | TypIntH   (** Type integer of hours *)
   | Typ of identifier (** A class type. *)
 
 and metho = {

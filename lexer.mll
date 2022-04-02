@@ -26,13 +26,10 @@ rule get_token = parse
   | space+    { get_token lexbuf }
   | "/*"      { comment lexbuf }
   | "++"      { INCR }
-  | "--"      { DECR }
   | '+'       { PLUS }
   | '-'       { MINUS }
   | "**"      { POWER }
   | '*'       { TIMES }
-  | "/"       { DIV }
-  | "//"      { DIVENT }
   | "&&"      { AND }
   | "||"      { OR }
   | "<"       { LT }
@@ -46,13 +43,6 @@ rule get_token = parse
   | "kg"      { KG }
   | "cg"      { CG }
   | "g"       { G }
-  | "ml"      { ML }
-  | "kl"      { KL }
-  | "cl"      { CL }
-  | "l"       { L }
-  | "s"       { S }
-  | "min"     { MIN }
-  | "h"       { H }
   | '('       { LPAREN }
   | ')'       { RPAREN }
   | '['       { LBRACKET }
