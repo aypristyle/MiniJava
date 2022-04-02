@@ -374,7 +374,10 @@ let rec typecheck_instruction (cenv : class_env) (venv : variable_env) (vinit : 
     **) 
      | ISyso e ->
      let e1 = typecheck_expression cenv venv vinit instanceof e in 
-     if e1.typ= TMJ.TypInt || e1.typ=TMJ.TypIntKm || e1.typ=TMJ.TypIntMm || e1.typ=TMJ.TypIntm || e1.typ=TMJ.TypIntCm || e1.typ=TMJ.TypIntKg || e1.typ=TMJ.TypIntMg || e1.typ=TMJ.TypIntg || e1.typ=TMJ.TypIntCg then (TMJ.ISyso e1, vinit) else error e "Not good"
+     if e1.typ= TMJ.TypInt || e1.typ=TMJ.TypIntKm || e1.typ=TMJ.TypIntMm || e1.typ=TMJ.TypIntm || e1.typ=TMJ.TypIntCm || e1.typ=TMJ.TypIntKg || e1.typ=TMJ.TypIntMg || e1.typ=TMJ.TypIntg || e1.typ=TMJ.TypIntCg then (TMJ.ISyso e1, vinit) else error e "Not good Isyso"
+     | To_Km e ->
+     let e1 = typecheck_expression cenv venv vinit instanceof e in 
+     if e1.typ= TMJ.TypIntKm || e1.typ=TMJ.TypIntMm || e1.typ=TMJ.TypIntm || e1.typ=TMJ.TypIntCm then (TMJ.ISyso e1, vinit) else error e "Not good to_km"
 
 (** [occurences x bindings] returns the elements in [bindings] that have [x] has identifier. *)
 let occurrences (x : string) (bindings : (identifier * 'a) list) : identifier list =

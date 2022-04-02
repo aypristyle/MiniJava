@@ -60,6 +60,7 @@ and instruction =
   | IIf of expression * instruction * instruction
   | IWhile of expression * instruction
   | ISyso of expression
+  | To_Km of expression
   | ISetVar of identifier * typ * expression
   | IArraySet of identifier * expression * expression
 

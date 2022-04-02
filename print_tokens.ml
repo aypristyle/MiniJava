@@ -97,6 +97,8 @@ let print_token show_loc out = function
      fprintf out "LENGTH"
   | SYSO ->
      fprintf out "SYSO"
+  | TO_KM ->
+     fprintf out "TO_KM"
   | IF ->
      fprintf out "IF"
   | ELSE ->

@@ -10,7 +10,7 @@
 %token CLASS PUBLIC STATIC VOID MAIN STRING EXTENDS RETURN
 %token INCR DECR
 %token POWER KM MM CM M KG MG CG G KL ML CL L S H MIN
-%token PLUS MINUS TIMES NOT LT AND GT OR EQUALS DIV DIVENT
+%token PLUS MINUS TIMES NOT LT AND GT OR EQUALS DIV DIVENT TO_KM
 %token COMMA SEMICOLON
 %token ASSIGN
 %token LPAREN RPAREN LBRACKET RBRACKET LBRACE RBRACE
@@ -26,6 +26,7 @@
 %left TIMES
 %left DIV DIVENT
 %left POWER
+%left TO_KM
 %nonassoc NOT
 %nonassoc INCR DECR
 %nonassoc DOT LBRACKET
@@ -224,6 +225,9 @@ instruction:
 
 | SYSO LPAREN e = expression RPAREN SEMICOLON
    { ISyso e }
+   
+| TO_KM LPAREN e = expression RPAREN SEMICOLON
+   { To_Km e }
 
 | IF LPAREN c = expression RPAREN i1 = instruction ELSE i2 = instruction
    { IIf (c, i1, i2) }
