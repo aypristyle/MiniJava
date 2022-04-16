@@ -3,12 +3,4 @@ m->km, km->m
 unité km, m (entier+unité) 2km, 3m
 heure, minutes secondes + fonction conversion
 vitesse -> fonction de conversion 
-les divisions 
-Pour l'instant notre ccompilateur supporte des nouvelles unités
-Tout d'abord les unités de longeurs (mm, cm, m, km)
-Ainsi que les unité de poids ( mg, cg, g, kg)
-Les unités de volumes (ml, cl, k, kl )
-Et enfin les unités relatives aux heures (h, min, secondes)
-Ensuite nous avons implémenté les opérateurs ==, <=, ainsi que les puissances (**) et 
-Nous avons aussi les opérateurs pour incrémenter /décrementer (++ et --)
 

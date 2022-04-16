@@ -29,22 +29,6 @@ let constant out = function
      fprintf out "%ld cg " i 
    | Constg i ->
      fprintf out "%ld g " i 
-     
-  | ConstKl i ->
-     fprintf out "%ld kl " i 
-  | ConstMl i ->
-     fprintf out "%ld ml " i 
-   | ConstCl i ->
-     fprintf out "%ld cl " i 
-   | Constl i ->
-     fprintf out "%ld l " i 
-     
-  | ConstH i ->
-     fprintf out "%ld h " i 
-   | ConstMin i ->
-     fprintf out "%ld min " i 
-   | ConstS i ->
-     fprintf out "%ld s " i 
 
 (** [binop out op] prints the binary operator [op] on the output channel [out]. *)
 let binop out = function
@@ -66,11 +50,6 @@ let binop out = function
      fprintf out "||"
   | OpPower ->
      fprintf out "**"
-  | OpDiv ->
-     fprintf out "/"
-  | OpDivEnt ->
-     fprintf out "//"
-          
 
 (** [expr out e], [expr0 out e], ..., [expr6 out e] print the expression [e]
     on the output channel [out]. [expr] is a synonym for [expr6].
@@ -121,16 +100,11 @@ and expr2 out e = match e.raw_expression with
   | EUnOp (UopIncr, e) ->
      fprintf out "%a++"
        expr2 e
-  
-  | EUnOp (UopDecr, e) ->
-     fprintf out "%a--"
-       expr2 e
-  
   | _ ->
      expr1 out e
 
 and expr3 out e = match e.raw_expression with 
-  | EBinOp ((OpMul | OpPower | OpDiv | OpDivEnt  )as op, e1, e2) ->
+  | EBinOp ((OpMul | OpPower )as op, e1, e2) ->
      fprintf out "%a %a %a"
        expr3 e1
        binop op
@@ -212,7 +186,6 @@ let typ out = function
     fprintf out "cm"
   |TypIntm ->
     fprintf out "m"
-  
   |TypIntKg ->
     fprintf out "kg"
   |TypIntMg ->
@@ -221,22 +194,6 @@ let typ out = function
     fprintf out "cg"
   |TypIntg ->
     fprintf out "g"
-  
-  |TypIntMl ->
-    fprintf out "ml"
-  |TypIntCl ->
-    fprintf out "cl"
-  |TypIntl ->
-    fprintf out "l"
-  |TypIntKl ->
-    fprintf out "kl"
-  |TypIntS ->
-    fprintf out "s"
-  |TypIntMin ->
-    fprintf out "min"
-  |TypIntH ->
-    fprintf out "h"
-  
   | TypIntArray ->
      fprintf out "int[]"
   | Typ id ->

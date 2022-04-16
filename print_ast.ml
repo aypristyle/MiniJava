@@ -80,21 +80,6 @@ let print_constant out = function
      fprintf out "Constg %ld" k
   | ConstKg k ->
      fprintf out "ConstKg %ld" k
-     
-  | ConstCl k ->
-     fprintf out "ConstCl %ld" k
-  | Constl k ->
-     fprintf out "Constl %ld" k
-  | ConstKl k ->
-     fprintf out "ConstKl %ld" k
-  | ConstMl k ->
-     fprintf out "ConstMl %ld" k
-  | ConstMin k ->
-     fprintf out "ConstMin %ld" k
-  | ConstS k ->
-     fprintf out "ConstS %ld" k
-  | ConstH k ->
-     fprintf out "ConstH %ld" k
 
 (** [print_unop out op] prints the unary operator [op] on the output channel [out]. *)
 let print_unop out = function
@@ -102,8 +87,6 @@ let print_unop out = function
      fprintf out "UOpNot"
   | UopIncr ->
      fprintf out "UopIncr"
-  | UopDecr ->
-     fprintf out "UopDecr"
 
 (** [print_binop out op] prints the binary operator [op] on the output channel [out]. *)
 let print_binop out = function
@@ -125,10 +108,6 @@ let print_binop out = function
      fprintf out "OpOr"
   | OpPower ->
     fprintf out "OpPower"
-  | OpDiv ->
-    fprintf out "OpDiv"
-  | OpDivEnt ->
-    fprintf out "OpDivEnt"
 
 (** [print_expression prefix out e] prints the expression [e] on the output channel [out].
     [prefix] is the string already printed just before [e]. *)
@@ -293,24 +272,6 @@ let print_type out typ =
      fprintf out "cg"
   | TypIntg ->
      fprintf out "g"
-     
-  | TypIntKl ->
-     fprintf out "kl"
-  | TypIntMl ->
-     fprintf out "ml"
-  | TypIntCl ->
-     fprintf out "cl"
-  | TypIntl ->
-     fprintf out "l"
-  
-  | TypIntH ->
-     fprintf out "h"
-  | TypIntMin ->
-     fprintf out "min"
-  | TypIntS ->
-     fprintf out "s"
-     
-     
   | TypBool ->
      fprintf out "bool"
   | TypIntArray ->
