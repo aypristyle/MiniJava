@@ -61,14 +61,26 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
   | TypBool, TypBool
   | TypIntKm, TypIntKm
   | TypIntm, TypIntm
-  | TypIntKm, TypIntm
   | TypIntCm, TypIntCm
   | TypIntMm, TypIntMm
+  | TypIntKm, TypIntm
+  | TypIntm, TypIntCm
+  | TypIntm, TypIntMm
+  | TypIntKm, TypIntMm
   | TypIntKg, TypIntKg
   | TypIntg, TypIntg
-  | TypIntKg, TypIntg
   | TypIntCg, TypIntCg
   | TypIntMg, TypIntMg
+  | TypIntKg, TypIntg
+  | TypIntg, TypIntCg
+  | TypIntg, TypIntMg
+  | TypIntKg, TypIntMg
+  | TypIntH,TypIntH
+  | TypIntMin,TypIntMin
+  | TypIntS,TypIntS
+  | TypIntH, TypIntMin
+  | TypIntH, TypIntS
+  | TypIntS, TypIntMin
   | TypIntArray, TypIntArray -> true
   | Typ t1, Typ t2 -> instanceof t1 t2
   | _, _ -> false
@@ -283,15 +295,62 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   	let e2' = typecheck_expression cenv venv vinit instanceof  e2 in
   	let t = match e1'.typ, e2'.typ with
   	(*on vérifie les types des paramètres en entrée pour traiter le cas où on aurait une addition de km et m => on veut retourner des m*)
-  		| _,TypIntm | TypIntm,_ -> TypIntm
+  		| TypIntH,TypIntH -> TypIntH
+  		| TypIntKm,TypIntm | TypIntm,TypIntKm -> TypIntm
+  		| TypIntMm,TypIntCm | TypIntCm,TypIntMm -> TypIntMm
+  		| _,TypIntCm | TypIntCm,_ -> TypIntCm
+  		| _,TypIntMm | TypIntMm,_ -> TypIntMm
   		| TypIntKm,TypIntKm  -> TypIntKm 
-  		| _,TypIntg | TypIntg,_ -> TypIntg
+  		| TypIntKg,TypIntg | TypIntg,TypIntKg -> TypIntg
+  		| _,TypIntCg | TypIntCg,_ -> TypIntCg
+  		| _,TypIntMg | TypIntMg,_ -> TypIntMg
   		| TypIntKg,TypIntKg  -> TypIntKg
+  		| TypIntH,TypIntS | TypIntS,TypIntH | TypIntS,TypIntS -> TypIntS
+  		| _,TypIntMin | TypIntMin,_ -> TypIntMin
   		| TypInt, TypInt -> TypInt 
   		| _ -> error e "The two expressions have uncompatible types, hence no addition possible" in
   		mke (TMJ.EBinOp(OpAdd, e1', e2')) t 
   	
+  | EBinOp ((OpSub), e1, e2) -> 
+  	let e1' = typecheck_expression cenv venv vinit instanceof  e1 in 
+  	let e2' = typecheck_expression cenv venv vinit instanceof  e2 in
+  	let t = match e1'.typ, e2'.typ with
+  	(*on vérifie les types des paramètres en entrée pour traiter le cas où on aurait une addition de km et m => on veut retourner des m*)
+  		| TypIntKm,TypIntm | TypIntm,TypIntKm -> TypIntm
+  		| _,TypIntCm | TypIntCm,_ -> TypIntCm
+  		| _,TypIntMm | TypIntMm,_ -> TypIntMm
+  		| TypIntKm,TypIntKm  -> TypIntKm 
+  		| TypIntKg,TypIntg | TypIntg,TypIntKg -> TypIntg
+  		| _,TypIntCg | TypIntCg,_ -> TypIntCg
+  		| _,TypIntMg | TypIntMg,_ -> TypIntMg
+  		| TypIntKg,TypIntKg  -> TypIntKg
+  		| TypIntH,TypIntH -> TypIntH
+  		| TypIntH,TypIntS | TypIntS,TypIntH | TypIntS,TypIntS -> TypIntS
+  		| _,TypIntMin | TypIntMin,_ -> TypIntMin
+  		| TypInt, TypInt -> TypInt 
+  		| _ -> error e "The two expressions have uncompatible types, hence no substraction possible" in
+  		mke (TMJ.EBinOp(OpSub, e1', e2')) t 
  
+ | EBinOp ((OpMul), e1, e2) -> 
+  	let e1' = typecheck_expression cenv venv vinit instanceof  e1 in 
+  	let e2' = typecheck_expression cenv venv vinit instanceof  e2 in
+  	let t = match e1'.typ, e2'.typ with
+  	(*on vérifie les types des paramètres en entrée pour traiter le cas où on aurait une addition de km et m => on veut retourner des m*)
+  		| TypIntKm,TypIntm | TypIntm,TypIntKm -> TypIntm
+  		| _,TypIntCm | TypIntCm,_ -> TypIntCm
+  		| _,TypIntMm | TypIntMm,_ -> TypIntMm
+  		| TypIntKm,TypIntKm  -> TypIntKm 
+  		| TypIntKg,TypIntg | TypIntg,TypIntKg -> TypIntg
+  		| _,TypIntCg | TypIntCg,_ -> TypIntCg
+  		| _,TypIntMg | TypIntMg,_ -> TypIntMg
+  		| TypIntKg,TypIntKg  -> TypIntKg
+  		| TypIntH,TypIntH -> TypIntH
+  		| TypIntH,TypIntS | TypIntS,TypIntH | TypIntS,TypIntS -> TypIntS
+  		| _,TypIntMin | TypIntMin,_ -> TypIntMin
+  		| TypInt, TypInt -> TypInt 
+  		| _ -> error e "The two expressions have uncompatible types, hence no multiplication possible" in
+  		mke (TMJ.EBinOp(OpMul, e1', e2')) t 
+  		
   | EBinOp (op, e1, e2) ->
       let expected, returned =
         match op with
@@ -390,7 +449,7 @@ let rec typecheck_instruction (cenv : class_env) (venv : variable_env) (vinit : 
     **) 
      | ISyso e ->
      let e1 = typecheck_expression cenv venv vinit instanceof e in 
-     if e1.typ= TMJ.TypInt || e1.typ=TMJ.TypIntKm || e1.typ=TMJ.TypIntMm || e1.typ=TMJ.TypIntm || e1.typ=TMJ.TypIntCm || e1.typ=TMJ.TypIntKg || e1.typ=TMJ.TypIntMg || e1.typ=TMJ.TypIntg || e1.typ=TMJ.TypIntCg then (TMJ.ISyso e1, vinit) else error e "Not good"
+     if e1.typ= TMJ.TypInt || e1.typ=TMJ.TypIntKm || e1.typ=TMJ.TypIntMm || e1.typ=TMJ.TypIntm || e1.typ=TMJ.TypIntCm || e1.typ=TMJ.TypIntKg || e1.typ=TMJ.TypIntMg || e1.typ=TMJ.TypIntg || e1.typ=TMJ.TypIntCg || e1.typ=TMJ.TypIntH || e1.typ=TMJ.TypIntMin || e1.typ=TMJ.TypIntS then (TMJ.ISyso e1, vinit) else error e "Not good"
 
 (** [occurences x bindings] returns the elements in [bindings] that have [x] has identifier. *)
 let occurrences (x : string) (bindings : (identifier * 'a) list) : identifier list =
