@@ -29,10 +29,30 @@ and constant =
   | ConstMm of int32 (** Mm constant **)
   | ConstCm of int32 (** Cm constant **)
   | Constm of int32 (** m constant **)
+  | ConstDm of int32 (** Dm constant **)
+  | ConstDam of int32 (** Dam constant **)
+  | ConstHm of int32 (** Hm constant **)
+
+  | ConstDg of int32 (** Dg constant **)
+  | ConstDag of int32 (** Dag constant **)
+  | ConstHg of int32 (** Hg constant **)
   | ConstKg of int32 (** Kg constant**)
   | ConstMg of int32 (** Mg constant **)
   | ConstCg of int32 (** Cg constant **)
   | Constg of int32 (** g constant **)
+
+
+  | ConstDl of int32 (** Dl constant **)
+  | ConstDal of int32 (** Dal constant **)
+  | ConstHl of int32 (** Hl constant **)
+  | ConstKl of int32 (** Kl constant**)
+  | ConstMl of int32 (** Ml constant **)
+  | ConstCl of int32 (** Cl constant **)
+  | Constl of int32 (** l constant **)
+
+  | ConstH of int32 (** Heures constant **)
+  | ConstS of int32 (** Secondes constant **)
+  | ConstMin of int32 (** Minutes constant **)
 
 and binop =
   | OpAdd  (** Binary operator [+]. *)
@@ -44,11 +64,13 @@ and binop =
   | OpEquals (** Binary operator [==]. *)
   | OpAnd  (** Binary operator [&&]. *)
   | OpOr   (** Binary operator [||]. *)
+  | OpDiv   (** Binary operator [||]. *)
   
 
 and unop = 
    |UOpNot   (** Unary operator [!]. *)
    |UopIncr  (** Incremetal operator [++]. *)
+   |UopDecr  (** Incremetal operator [--]. *)
 
 and instruction =
   | IBlock of instruction list (** [IBlock [i1; i2; ...; in]] represents the instruction [{ i1 i2 ... in }]. *)
@@ -62,14 +84,31 @@ and typ =
   | TypInt (** Type [int]. *)
   | TypBool (** Type [bool]. *)
   | TypIntArray (** Type [int[]]. *)
+
   | TypIntKm    (** Type integer of km *)
   | TypIntMm    (** Type integer of mm *)
   | TypIntCm    (** Type integer of cm *)
   | TypIntm     (** Type integer of m *)
+  | TypIntHm    (** Type integer of hm *)
+  | TypIntDam    (** Type integer of dam *)
+  | TypIntDm     (** Type integer of dm *)
+
   | TypIntKg    (** Type integer of kg *)
   | TypIntMg    (** Type integer of mg *)
   | TypIntCg    (** Type integer of cg *)
   | TypIntg    (** Type integer of g *)
+  | TypIntHg    (** Type integer of hg *)
+  | TypIntDag    (** Type integer of dag *)
+  | TypIntDg    (** Type integer of dg *)
+
+  | TypIntKl    (** Type integer of kl *)
+  | TypIntMl    (** Type integer of ml *)
+  | TypIntCl    (** Type integer of cl *)
+  | TypIntl    (** Type integer of l *)
+  | TypIntHl    (** Type integer of hl *)
+  | TypIntDal    (** Type integer of dal *)
+  | TypIntDl    (** Type integer of dl *)
+
   | TypIntH    (** Type integer of h *)
   | TypIntMin    (** Type integer of min *)
   | TypIntS    (** Type integer of s *)

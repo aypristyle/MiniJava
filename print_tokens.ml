@@ -52,6 +52,8 @@ let print_token show_loc out = function
      fprintf out "NOT"
   | INCR ->
      fprintf out "INCR"
+  | DECR ->
+     fprintf out "DECR"
   | LT ->
      fprintf out "LT"
   | GT ->
@@ -106,14 +108,50 @@ let print_token show_loc out = function
      fprintf out "CM"
   |M ->
      fprintf out "M"
+  |DM ->
+     fprintf out "DM"
+  |DAM ->
+     fprintf out "DAM"
+  |HM ->
+     fprintf out "HM"
   |KG ->
      fprintf out "KG"
   |MG ->
      fprintf out "MG"
+
   |CG ->
      fprintf out "CG"
   |G ->
      fprintf out "G"
+  |DG ->
+     fprintf out "DG"
+  |DAG ->
+     fprintf out "DAG"
+  |HG ->
+     fprintf out "HG"
+
+  |KL ->
+     fprintf out "KL"
+  |ML ->
+     fprintf out "ML"
+  |CL ->
+     fprintf out "CL"
+  |L ->
+     fprintf out "L"
+  |DL ->
+     fprintf out "DL"
+  |DAL ->
+     fprintf out "DAL"
+  |HL ->
+     fprintf out "HL"
+
+  |MIN ->
+     fprintf out "MIN"
+  |H ->
+     fprintf out "H"
+  |S ->
+     fprintf out "S"
+
 
 let print out lexbuf show_loc =
   let token = ref (Lexer.get_token lexbuf) in

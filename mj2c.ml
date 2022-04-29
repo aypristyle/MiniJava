@@ -327,6 +327,12 @@ let type2c
   | TypIntMm -> fprintf out "mm"
   | TypIntm -> fprintf out "m"
   | TypIntCm -> fprintf out "cm"
+  | TypIntDm -> fprintf out "dm"
+  | TypIntDam -> fprintf out "dam"
+  | TypIntHm -> fprintf out "hm"
+  | TypIntDg -> fprintf out "dg"
+  | TypIntDag -> fprintf out "dag"
+  | TypIntHg -> fprintf out "hg"
   | TypIntKg -> fprintf out "kg"
   | TypIntMg -> fprintf out "mg"
   | TypIntg -> fprintf out "g"
@@ -334,6 +340,13 @@ let type2c
   | TypIntH -> fprintf out "h"
   | TypIntMin -> fprintf out "min"
   | TypIntS -> fprintf out "s"
+  | TypIntKl -> fprintf out "kl"
+  | TypIntMl -> fprintf out "ml"
+  | TypIntl -> fprintf out "l"
+  | TypIntCl -> fprintf out "cl"
+  | TypIntDl -> fprintf out "dl"
+  | TypIntDal -> fprintf out "dal"
+  | TypIntHl -> fprintf out "hl"
   | TypIntArray -> fprintf out "struct %s*" !struct_array_name
   | Typ t -> fprintf out "struct %s*" t
 
@@ -448,6 +461,9 @@ let expr2c
          
     | EUnOp (UopIncr, e) ->
        fprintf out "++(%a)"
+         expr2c e
+    | EUnOp (UopDecr, e) ->
+       fprintf out "--(%a)"
          expr2c e
 
     | EBinOp(OpPower, e1,e2) ->     	

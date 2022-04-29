@@ -26,6 +26,7 @@ rule get_token = parse
   | space+    { get_token lexbuf }
   | "/*"      { comment lexbuf }
   | "++"      { INCR }
+  | "DECR"    { DECR}
   | '+'       { PLUS }
   | '-'       { MINUS }
   | "**"      { POWER }
@@ -39,10 +40,26 @@ rule get_token = parse
   | "km"      { KM }
   | "cm"      { CM }
   | "m"       { M }
+  | "hm"      { HM }
+  | "dam"     { DAM }
+  | "dm"      { DM }
   | "mg"      { MG }
   | "kg"      { KG }
   | "cg"      { CG }
   | "g"       { G }
+  | "hg"      { HG }
+  | "dg"      { DG }
+  |"dag"      { DAG }
+  | "mg"      { MG }
+  | "kg"      { KL }
+  | "cg"      { CL }
+  | "g"       { L }
+  | "hg"      { HL }
+  | "dg"      { DL }
+  |"dag"      { DAL }
+  | "s"       { S }
+  | "min"     { MIN }
+  |"h"        { H }
   | '('       { LPAREN }
   | ')'       { RPAREN }
   | '['       { LBRACKET }

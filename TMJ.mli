@@ -24,11 +24,28 @@ and constant = LMJ.constant =
   | ConstMm of int32
   | ConstCm of int32
   | Constm of int32
+  | ConstDam of int32
+  | ConstDm of int32
+  | ConstHm of int32
+
   | ConstKg of int32
   | ConstMg of int32
   | ConstCg of int32
   | Constg of int32
+  | ConstDag of int32
+  | ConstDg of int32
+  | ConstHg of int32
 
+  | ConstKl of int32
+  | ConstMl of int32
+  | ConstCl of int32
+  | Constl of int32
+  | ConstDal of int32
+  | ConstDl of int32
+  | ConstHl of int32
+  | ConstMin of int32
+  | ConstH of int32
+  | ConstS of int32
 and binop = LMJ.binop =
   | OpAdd
   | OpSub
@@ -44,6 +61,7 @@ and binop = LMJ.binop =
 and unop = LMJ.unop = 
   |UOpNot
   |UopIncr
+  |UopDecr
 
 and instruction =
   | IBlock of instruction list
@@ -61,10 +79,23 @@ and typ =
   | TypIntMm
   | TypIntCm
   | TypIntm
+  | TypIntHm
+  | TypIntDam
+  | TypIntDm
+  | TypIntKl
+  | TypIntMl
+  | TypIntCl
+  | TypIntl
+  | TypIntHl
+  | TypIntDal
+  | TypIntDl
   | TypIntKg
   | TypIntMg
   | TypIntCg
   | TypIntg
+  | TypIntHg
+  | TypIntDag
+  | TypIntDg
   | TypIntH
   | TypIntMin
   | TypIntS
