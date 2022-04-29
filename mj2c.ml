@@ -459,63 +459,63 @@ let expr2c
     (*pattern matching pour vérifier le types des paramètres de OpAdd pour pas qu'on convertisse à chaque addition*)
     	begin
     	 match e1.typ,e2.typ with 
-    		| TypIntKm,TypIntKm | TypIntm, TypIntm | TypIntCm, TypIntCm | TypIntMm, TypIntMm | TypIntKg,TypIntKg | TypIntg,TypIntg | TypIntCg, TypIntCg | TypIntMg, TypIntMg | TypIntH, TypIntH | TypIntMin, TypIntMin | TypIntS, TypIntS -> fprintf out "(%a %a %a)"
+    		| TypIntKm,TypIntKm | TypIntm, TypIntm | TypIntCm, TypIntCm | TypIntMm, TypIntMm | TypIntKg,TypIntKg | TypIntg,TypIntg | TypIntCg, TypIntCg | TypIntMg, TypIntMg | TypIntKL,TypIntKL | TypIntL,TypIntL | TypIntCL, TypIntCL | TypIntML, TypIntML | TypIntH, TypIntH | TypIntMin, TypIntMin | TypIntS, TypIntS -> fprintf out "(%a %a %a)"
           				expr2c e1
         				binop2c OpAdd
          				expr2c e2
          	
-         	| TypIntCm,TypIntMm | TypIntCg,TypIntMg -> fprintf out "((%a)*10 %a %a)"
+         	| TypIntCm,TypIntMm | TypIntCg,TypIntMg | TypIntCL,TypIntML -> fprintf out "((%a)*10 %a %a)"
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
          	
          	
-         	| TypIntMm,TypIntCm | TypIntMg,TypIntCg -> fprintf out "(%a %a (%a)*10)"
+         	| TypIntMm,TypIntCm | TypIntMg,TypIntCg | TypIntML,TypIntCL -> fprintf out "(%a %a (%a)*10)"
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
          					
-         	| TypIntm,TypIntCm | TypIntg,TypIntCg -> fprintf out "((%a)*100 %a %a)"
+         	| TypIntm,TypIntCm | TypIntg,TypIntCg | TypIntL,TypIntCL-> fprintf out "((%a)*100 %a %a)"
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
          	
          	
-         	| TypIntCm,TypIntm | TypIntCg,TypIntg -> fprintf out "(%a %a (%a)*100)"
+         	| TypIntCm,TypIntm | TypIntCg,TypIntg | TypIntCL,TypIntL -> fprintf out "(%a %a (%a)*100)"
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
          						
-         	| TypIntKm,TypIntm | TypIntKg,TypIntg | TypIntm,TypIntMm | TypIntg,TypIntMg -> fprintf out "((%a)*1000 %a %a)"
+         	| TypIntKm,TypIntm | TypIntKg,TypIntg | TypIntm,TypIntMm | TypIntg,TypIntMg | TypIntKL,TypIntL | TypIntL,TypIntML -> fprintf out "((%a)*1000 %a %a)"
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
          	
          	
          	
-         	| TypIntm,TypIntKm | TypIntg,TypIntKg | TypIntMm,TypIntm | TypIntMg,TypIntg  -> fprintf out "(%a %a (%a)*1000)"
+         	| TypIntm,TypIntKm | TypIntg,TypIntKg | TypIntMm,TypIntm | TypIntMg,TypIntg | TypIntL,TypIntKL | TypIntML,TypIntL  -> fprintf out "(%a %a (%a)*1000)"
          				expr2c e1  
         				binop2c OpAdd
          				expr2c e2
          	
-         	| TypIntKm,TypIntCm | TypIntKg,TypIntCg -> fprintf out "((%a)*100000 %a %a)"
+         	| TypIntKm,TypIntCm | TypIntKg,TypIntCg | TypIntKL,TypIntCL  -> fprintf out "((%a)*100000 %a %a)"
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
          	
          	
-         	| TypIntCm,TypIntKm | TypIntCg,TypIntKg -> fprintf out "(%a %a (%a)*100000)"
+         	| TypIntCm,TypIntKm | TypIntCg,TypIntKg | TypIntCL,TypIntKL -> fprintf out "(%a %a (%a)*100000)"
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
          				
-         	| TypIntKm,TypIntMm | TypIntKg,TypIntMg -> fprintf out "((%a)*1000000 %a %a)"
+         	| TypIntKm,TypIntMm | TypIntKg,TypIntMg | TypIntKL,TypIntML -> fprintf out "((%a)*1000000 %a %a)"
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
          	
          	
-         	| TypIntMm,TypIntKm | TypIntMg,TypIntKg -> fprintf out "(%a %a (%a)*1000000)"
+         	| TypIntMm,TypIntKm | TypIntMg,TypIntKg | TypIntML,TypIntKL-> fprintf out "(%a %a (%a)*1000000)"
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
@@ -556,61 +556,61 @@ let expr2c
     (*pattern matching pour vérifier le types des paramètres de OpAdd pour pas qu'on convertisse à chaque addition*)
     	begin
     	 match e1.typ,e2.typ with 
-    		| TypIntKm,TypIntKm | TypIntm, TypIntm | TypIntCm, TypIntCm | TypIntMm, TypIntMm | TypIntKg,TypIntKg | TypIntg,TypIntg | TypIntCg, TypIntCg | TypIntMg, TypIntMg-> fprintf out "(%a %a %a)"
+    		| TypIntKm,TypIntKm | TypIntm, TypIntm | TypIntCm, TypIntCm | TypIntMm, TypIntMm | TypIntKg,TypIntKg | TypIntg,TypIntg | TypIntCg, TypIntCg | TypIntMg, TypIntMg | TypIntKL,TypIntKL | TypIntL,TypIntL | TypIntCL, TypIntCL | TypIntML, TypIntML | TypIntH, TypIntH | TypIntMin, TypIntMin | TypIntS, TypIntS -> fprintf out "(%a %a %a)"
          				expr2c e1
         				binop2c OpSub
          				expr2c e2
          				
-         	| TypIntCm,TypIntMm | TypIntCg,TypIntMg -> fprintf out "((%a)*10 %a %a)"
+         	| TypIntCm,TypIntMm | TypIntCg,TypIntMg | TypIntCL,TypIntML -> fprintf out "((%a)*10 %a %a)"
          				expr2c e1
         				binop2c OpSub
          				expr2c e2
          	
          	
-         	| TypIntMm,TypIntCm | TypIntMg,TypIntCg -> fprintf out "(%a %a (%a)*10)"
-         				expr2c e1
-        				binop2c OpSub
-         				expr2c e2
-         				
-         	| TypIntm,TypIntCm | TypIntg,TypIntCg -> fprintf out "((%a)*100 %a %a)"
-         				expr2c e1
-        				binop2c OpSub
-         				expr2c e2
-         	
-         	| TypIntCm,TypIntm | TypIntCg,TypIntg -> fprintf out "(%a %a (%a)*100)"
+         	| TypIntMm,TypIntCm | TypIntMg,TypIntCg | TypIntML,TypIntCL-> fprintf out "(%a %a (%a)*10)"
          				expr2c e1
         				binop2c OpSub
          				expr2c e2
          				
-         	| TypIntKm,TypIntm | TypIntKg,TypIntg | TypIntm,TypIntMm | TypIntg,TypIntMg -> fprintf out "((%a)*1000 %a %a)"
+         	| TypIntm,TypIntCm | TypIntg,TypIntCg | TypIntL,TypIntCL -> fprintf out "((%a)*100 %a %a)"
+         				expr2c e1
+        				binop2c OpSub
+         				expr2c e2
+         	
+         	| TypIntCm,TypIntm | TypIntCg,TypIntg | TypIntCL,TypIntL -> fprintf out "(%a %a (%a)*100)"
+         				expr2c e1
+        				binop2c OpSub
+         				expr2c e2
+         				
+         	| TypIntKm,TypIntm | TypIntKg,TypIntg | TypIntm,TypIntMm | TypIntg,TypIntMg | TypIntKL,TypIntL | TypIntL,TypIntML -> fprintf out "((%a)*1000 %a %a)"
          				expr2c e1
         				binop2c OpSub
          				expr2c e2
          	
          	
-         	| TypIntm,TypIntKm | TypIntg,TypIntKg | TypIntMm,TypIntm | TypIntMg,TypIntg  -> fprintf out "(%a %a (%a)*1000)"
+         	| TypIntm,TypIntKm | TypIntg,TypIntKg | TypIntMm,TypIntm | TypIntMg,TypIntg | TypIntL,TypIntKL | TypIntML,TypIntL -> fprintf out "(%a %a (%a)*1000)"
          				expr2c e1  
         				binop2c OpSub
          				expr2c e2
          	
-         	| TypIntKm,TypIntCm | TypIntKg,TypIntCg -> fprintf out "((%a)*100000 %a %a)"
+         	| TypIntKm,TypIntCm | TypIntKg,TypIntCg | TypIntKL,TypIntCL-> fprintf out "((%a)*100000 %a %a)"
          				expr2c e1
         				binop2c OpSub
          				expr2c e2
          	
          	
-         	| TypIntCm,TypIntKm | TypIntCg,TypIntKg -> fprintf out "(%a %a (%a)*100000)"
+         	| TypIntCm,TypIntKm | TypIntCg,TypIntKg | TypIntCL,TypIntKL -> fprintf out "(%a %a (%a)*100000)"
          				expr2c e1
         				binop2c OpSub
          				expr2c e2
          				
-         	| TypIntKm,TypIntMm | TypIntKg,TypIntMg -> fprintf out "((%a)*1000000 %a %a)"
+         	| TypIntKm,TypIntMm | TypIntKg,TypIntMg | TypIntKL,TypIntML -> fprintf out "((%a)*1000000 %a %a)"
          				expr2c e1
         				binop2c OpSub
          				expr2c e2
          	
          	
-         	| TypIntMm,TypIntKm | TypIntMg,TypIntKg -> fprintf out "(%a %a (%a)*1000000)"
+         	| TypIntMm,TypIntKm | TypIntMg,TypIntKg | TypIntML,TypIntKL-> fprintf out "(%a %a (%a)*1000000)"
          				expr2c e1
         				binop2c OpSub
          				expr2c e2
@@ -651,62 +651,62 @@ let expr2c
     (*pattern matching pour vérifier le types des paramètres de OpAdd pour pas qu'on convertisse à chaque addition*)
     	begin
     	 match e1.typ,e2.typ with 
-    		| TypIntKm,TypIntKm | TypIntm, TypIntm | TypIntCm, TypIntCm | TypIntMm, TypIntMm | TypIntKg,TypIntKg | TypIntg,TypIntg | TypIntCg, TypIntCg | TypIntMg, TypIntMg-> fprintf out "(%a %a %a)"
+    		| TypIntKm,TypIntKm | TypIntm, TypIntm | TypIntCm, TypIntCm | TypIntMm, TypIntMm | TypIntKg,TypIntKg | TypIntg,TypIntg | TypIntCg, TypIntCg | TypIntMg, TypIntMg | TypIntKL,TypIntKL | TypIntL,TypIntL | TypIntCL, TypIntCL | TypIntML, TypIntML | TypIntH, TypIntH | TypIntMin, TypIntMin | TypIntS, TypIntS -> fprintf out "(%a %a %a)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
          				
-         	| TypIntCm,TypIntMm | TypIntCg,TypIntMg -> fprintf out "((%a)*10 %a %a)"
+         	| TypIntCm,TypIntMm | TypIntCg,TypIntMg | TypIntCL,TypIntML-> fprintf out "((%a)*10 %a %a)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
          	
          	
-         	| TypIntMm,TypIntCm | TypIntMg,TypIntCg -> fprintf out "(%a %a (%a)*10)"
+         	| TypIntMm,TypIntCm | TypIntMg,TypIntCg | TypIntML,TypIntCL -> fprintf out "(%a %a (%a)*10)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
          		
-    		| TypIntm,TypIntCm | TypIntg,TypIntCg -> fprintf out "((%a)*100 %a %a)"
+    		| TypIntm,TypIntCm | TypIntg,TypIntCg | TypIntL,TypIntCL -> fprintf out "((%a)*100 %a %a)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
          	
          	
-         	| TypIntCm,TypIntm | TypIntCg,TypIntg -> fprintf out "(%a %a (%a)*100)"
+         	| TypIntCm,TypIntm | TypIntCg,TypIntg | TypIntCL,TypIntL -> fprintf out "(%a %a (%a)*100)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
          						
-         	| TypIntKm,TypIntm | TypIntKg,TypIntg | TypIntm,TypIntMm | TypIntg,TypIntMg -> fprintf out "((%a)*1000 %a %a)"
+         	| TypIntKm,TypIntm | TypIntKg,TypIntg | TypIntm,TypIntMm | TypIntg,TypIntMg | TypIntKL,TypIntL | TypIntL,TypIntML -> fprintf out "((%a)*1000 %a %a)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
          	
          	
-         	| TypIntm,TypIntKm | TypIntg,TypIntKg | TypIntMm,TypIntm | TypIntMg,TypIntg  -> fprintf out "(%a %a (%a)*1000)"
+         	| TypIntm,TypIntKm | TypIntg,TypIntKg | TypIntMm,TypIntm | TypIntMg,TypIntg | TypIntL,TypIntKL | TypIntML,TypIntL -> fprintf out "(%a %a (%a)*1000)"
          				expr2c e1  
         				binop2c OpMul
          				expr2c e2
          	
-         	| TypIntKm,TypIntCm | TypIntKg,TypIntCg -> fprintf out "((%a)*100000 %a %a)"
+         	| TypIntKm,TypIntCm | TypIntKg,TypIntCg | TypIntKL,TypIntCL -> fprintf out "((%a)*100000 %a %a)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
          	
          	
-         	| TypIntCm,TypIntKm | TypIntCg,TypIntKg -> fprintf out "(%a %a (%a)*100000)"
+         	| TypIntCm,TypIntKm | TypIntCg,TypIntKg | TypIntCL,TypIntKL-> fprintf out "(%a %a (%a)*100000)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
          				
-         	| TypIntKm,TypIntMm | TypIntKg,TypIntMg -> fprintf out "((%a)*1000000 %a %a)"
+         	| TypIntKm,TypIntMm | TypIntKg,TypIntMg | TypIntKL,TypIntML -> fprintf out "((%a)*1000000 %a %a)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
          	
          	
-         	| TypIntMm,TypIntKm | TypIntMg,TypIntKg -> fprintf out "(%a %a (%a)*1000000)"
+         	| TypIntMm,TypIntKm | TypIntMg,TypIntKg | TypIntML,TypIntKL -> fprintf out "(%a %a (%a)*1000000)"
          				expr2c e1
         				binop2c OpMul
          				expr2c e2

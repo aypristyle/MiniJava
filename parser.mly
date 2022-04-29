@@ -220,23 +220,35 @@ typ:
    {TypIntKm}
 | INTEGER MM
    {TypIntMm}
-   
 | INTEGER CM
    {TypIntCm}
-   
 | INTEGER M
    {TypIntm}
    
- |INTEGER KG
+|INTEGER KG
    {TypIntKg}
 | INTEGER MG
    {TypIntMg}
-   
 | INTEGER CG
    {TypIntCg}
-   
 | INTEGER G
    {TypIntg}
+   
+|INTEGER KL
+   {TypIntKL}
+| INTEGER ML
+   {TypIntML}
+| INTEGER CL
+   {TypIntCL}
+| INTEGER L
+   {TypIntL}
 
+| INTEGER H
+   {TypIntH}  
+| INTEGER MIN
+   {TypIntMin} 
+| INTEGER S
+   {TypIntS}
+   
 | id = IDENT
    { Typ id }

@@ -1,7 +1,7 @@
 /*
 class test {
   public static void main(String[] a) {
-    System.out.println(1 h  + 30 s );
+    System.out.println(3 mm  - 3 g );
   }
 }
 */
@@ -15,7 +15,7 @@ struct array { int* array; int length; };
 tgc_t gc;
 int main(int argc, char *argv[]) {
   tgc_start(&gc, &argc);
-  printf("%d s\n", ((1)*3600 + 30));
+  printf("%d mg\n", (3 - (3)*1000));
   tgc_stop(&gc);
 
   return 0;

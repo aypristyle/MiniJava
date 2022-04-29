@@ -18,16 +18,23 @@ and raw_expression =
   | EObjectAlloc of identifier
 
 and constant = LMJ.constant =
-  | ConstBool of bool
-  | ConstInt of int32
-  | ConstKm of int32
-  | ConstMm of int32
-  | ConstCm of int32
-  | Constm of int32
-  | ConstKg of int32
-  | ConstMg of int32
-  | ConstCg of int32
-  | Constg of int32
+  | ConstBool of bool (** Boolean constant [true] or [false]. *)
+  | ConstInt of int32 (** Integer constant [[-2^31, 2^31 - 1]]. *)
+  | ConstKm of int32 (** Km constant**)
+  | ConstMm of int32 (** Mm constant **)
+  | ConstCm of int32 (** Cm constant **)
+  | Constm of int32 (** m constant **)
+  | ConstKg of int32 (** Kg constant**)
+  | ConstMg of int32 (** Mg constant **)
+  | ConstCg of int32 (** Cg constant **)
+  | Constg of int32 (** g constant **)
+  | ConstKL of int32 (** Kl constant**)
+  | ConstML of int32 (** Ml constant **)
+  | ConstCL of int32 (** Cl constant **)
+  | ConstL of int32 (** l constant **)
+  | ConstH of int32 (** h constant **)
+  | ConstMin of int32 (** min constant **)
+  | ConstS of int32 (** s constant **)
 
 and binop = LMJ.binop =
   | OpAdd
@@ -65,6 +72,10 @@ and typ =
   | TypIntMg
   | TypIntCg
   | TypIntg
+  | TypIntKL
+  | TypIntML
+  | TypIntCL
+  | TypIntL
   | TypIntH
   | TypIntMin
   | TypIntS

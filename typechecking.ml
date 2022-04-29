@@ -81,6 +81,14 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
   | TypIntH, TypIntMin
   | TypIntH, TypIntS
   | TypIntS, TypIntMin
+  | TypIntKL, TypIntKL
+  | TypIntL, TypIntL
+  | TypIntCL, TypIntCL
+  | TypIntML, TypIntML
+  | TypIntKL, TypIntL
+  | TypIntL, TypIntCL
+  | TypIntL, TypIntML
+  | TypIntKL, TypIntML
   | TypIntArray, TypIntArray -> true
   | Typ t1, Typ t2 -> instanceof t1 t2
   | _, _ -> false
@@ -98,6 +106,13 @@ let rec type_lmj_to_tmj = function
   | TypIntCg    -> TMJ.TypIntCg
   | TypIntg    -> TMJ.TypIntg
   | TypIntKg     -> TMJ.TypIntKg
+  | TypIntML    -> TMJ.TypIntML
+  | TypIntCL    -> TMJ.TypIntCL
+  | TypIntL    -> TMJ.TypIntL
+  | TypIntKL     -> TMJ.TypIntKL
+  | TypIntH    -> TMJ.TypIntH
+  | TypIntMin    -> TMJ.TypIntMin
+  | TypIntS     -> TMJ.TypIntS
   | TypIntArray -> TMJ.TypIntArray
   | Typ id      -> TMJ.Typ (Location.content id)
 
@@ -112,6 +127,13 @@ let rec type_tmj_to_lmj startpos endpos = function
 |TMJ.TypIntMg     ->TypIntMg
 |TMJ.TypIntCg     ->TypIntCg
 |TMJ.TypIntg     ->TypIntg
+|TMJ.TypIntKL     -> TypIntKL
+|TMJ.TypIntML     ->TypIntML
+|TMJ.TypIntCL     ->TypIntCL
+|TMJ.TypIntL     ->TypIntL
+|TMJ.TypIntH     ->TypIntH
+|TMJ.TypIntMin     ->TypIntMin
+|TMJ.TypIntS     ->TypIntS
 | TMJ.TypBool     -> TypBool
 | TMJ.TypIntArray -> TypIntArray
 | TMJ.Typ id      -> Typ (Location.make startpos endpos id)
@@ -129,6 +151,13 @@ let rec tmj_type_to_string : TMJ.typ -> string = function
   | TMJ.TypIntKg -> "kg"
   | TMJ.TypIntCg -> "cg"
   | TMJ.TypIntg -> "g"
+  | TMJ.TypIntML -> "ml"
+  | TMJ.TypIntKL -> "kl"
+  | TMJ.TypIntCL -> "cl"
+  | TMJ.TypIntL -> "l"
+  | TMJ.TypIntH -> "h"
+  | TMJ.TypIntMin -> "min"
+  | TMJ.TypIntS -> "s"
   | TMJ.Typ t -> t
 
 (** [type_to_string t] converts the [LMJ] type [t] into a string representation. *)
@@ -216,6 +245,27 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
    | EConst (Constg i) ->
       mke (TMJ.EConst (Constg i)) TypIntg
 
+
+   | EConst (ConstKL i) ->
+      mke (TMJ.EConst (ConstKL i)) TypIntKL
+   | EConst (ConstML i) ->
+      mke (TMJ.EConst (ConstML i)) TypIntML
+   | EConst (ConstCL i) ->
+      mke (TMJ.EConst (ConstCL i)) TypIntCL
+   | EConst (ConstL i) ->
+      mke (TMJ.EConst (ConstL i)) TypIntL
+
+
+  | EConst (ConstH i) ->
+      mke (TMJ.EConst (ConstH i)) TypIntH
+   | EConst (ConstMin i) ->
+      mke (TMJ.EConst (ConstMin i)) TypIntMin
+   | EConst (ConstS i) ->
+      mke (TMJ.EConst (ConstS i)) TypIntS
+
+
+
+
   | EGetVar v ->
      let typ = vlookup v venv in
      let v' = Location.content v in
@@ -244,16 +294,25 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   	let e2' = typecheck_expression cenv venv vinit instanceof  e2 in
   	let t = match e1'.typ, e2'.typ with
   	(*on vérifie les types des paramètres en entrée pour traiter le cas où on aurait une addition de km et m => on veut retourner des m*)
-  		| TypIntH,TypIntH -> TypIntH
+  		(* KM HM DAM M DM CM MM *)
   		| TypIntKm,TypIntm | TypIntm,TypIntKm -> TypIntm
   		| TypIntMm,TypIntCm | TypIntCm,TypIntMm -> TypIntMm
   		| _,TypIntCm | TypIntCm,_ -> TypIntCm
   		| _,TypIntMm | TypIntMm,_ -> TypIntMm
   		| TypIntKm,TypIntKm  -> TypIntKm 
+  		(* KG HG DAG G DG CG MG *)
   		| TypIntKg,TypIntg | TypIntg,TypIntKg -> TypIntg
   		| _,TypIntCg | TypIntCg,_ -> TypIntCg
   		| _,TypIntMg | TypIntMg,_ -> TypIntMg
   		| TypIntKg,TypIntKg  -> TypIntKg
+  		(* KL HL DAL L DL CL ML *)
+  		| TypIntKL,TypIntL | TypIntL,TypIntKL -> TypIntL
+  		| TypIntML,TypIntCL | TypIntCL,TypIntML -> TypIntML
+  		| _,TypIntCL | TypIntCL,_ -> TypIntCL
+  		| _,TypIntML | TypIntML,_ -> TypIntML
+  		| TypIntKL,TypIntKL  -> TypIntKL 
+  		(* H Min S *)
+  		| TypIntH,TypIntH -> TypIntH
   		| TypIntH,TypIntS | TypIntS,TypIntH | TypIntS,TypIntS -> TypIntS
   		| _,TypIntMin | TypIntMin,_ -> TypIntMin
   		| TypInt, TypInt -> TypInt 
@@ -265,18 +324,28 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   	let e2' = typecheck_expression cenv venv vinit instanceof  e2 in
   	let t = match e1'.typ, e2'.typ with
   	(*on vérifie les types des paramètres en entrée pour traiter le cas où on aurait une addition de km et m => on veut retourner des m*)
+  		(* KM HM DAM M DM CM MM *)
   		| TypIntKm,TypIntm | TypIntm,TypIntKm -> TypIntm
+  		| TypIntMm,TypIntCm | TypIntCm,TypIntMm -> TypIntMm
   		| _,TypIntCm | TypIntCm,_ -> TypIntCm
   		| _,TypIntMm | TypIntMm,_ -> TypIntMm
   		| TypIntKm,TypIntKm  -> TypIntKm 
+  		(* KG HG DAG G DG CG MG *)
   		| TypIntKg,TypIntg | TypIntg,TypIntKg -> TypIntg
   		| _,TypIntCg | TypIntCg,_ -> TypIntCg
   		| _,TypIntMg | TypIntMg,_ -> TypIntMg
   		| TypIntKg,TypIntKg  -> TypIntKg
+  		(* KL HL DAL L DL CL ML *)
+  		| TypIntKL,TypIntL | TypIntL,TypIntKL -> TypIntL
+  		| TypIntML,TypIntCL | TypIntCL,TypIntML -> TypIntML
+  		| _,TypIntCL | TypIntCL,_ -> TypIntCL
+  		| _,TypIntML | TypIntML,_ -> TypIntML
+  		| TypIntKL,TypIntKL  -> TypIntKL 
+  		(* H Min S *)
   		| TypIntH,TypIntH -> TypIntH
   		| TypIntH,TypIntS | TypIntS,TypIntH | TypIntS,TypIntS -> TypIntS
   		| _,TypIntMin | TypIntMin,_ -> TypIntMin
-  		| TypInt, TypInt -> TypInt 
+  		| TypInt, TypInt -> TypInt  
   		| _ -> error e "The two expressions have uncompatible types, hence no substraction possible" in
   		mke (TMJ.EBinOp(OpSub, e1', e2')) t 
  
@@ -285,14 +354,24 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   	let e2' = typecheck_expression cenv venv vinit instanceof  e2 in
   	let t = match e1'.typ, e2'.typ with
   	(*on vérifie les types des paramètres en entrée pour traiter le cas où on aurait une addition de km et m => on veut retourner des m*)
+  		(* KM HM DAM M DM CM MM *)
   		| TypIntKm,TypIntm | TypIntm,TypIntKm -> TypIntm
+  		| TypIntMm,TypIntCm | TypIntCm,TypIntMm -> TypIntMm
   		| _,TypIntCm | TypIntCm,_ -> TypIntCm
   		| _,TypIntMm | TypIntMm,_ -> TypIntMm
   		| TypIntKm,TypIntKm  -> TypIntKm 
+  		(* KG HG DAG G DG CG MG *)
   		| TypIntKg,TypIntg | TypIntg,TypIntKg -> TypIntg
   		| _,TypIntCg | TypIntCg,_ -> TypIntCg
   		| _,TypIntMg | TypIntMg,_ -> TypIntMg
   		| TypIntKg,TypIntKg  -> TypIntKg
+  		(* KL HL DAL L DL CL ML *)
+  		| TypIntKL,TypIntL | TypIntL,TypIntKL -> TypIntL
+  		| TypIntML,TypIntCL | TypIntCL,TypIntML -> TypIntML
+  		| _,TypIntCL | TypIntCL,_ -> TypIntCL
+  		| _,TypIntML | TypIntML,_ -> TypIntML
+  		| TypIntKL,TypIntKL  -> TypIntKL 
+  		(* H Min S *)
   		| TypIntH,TypIntH -> TypIntH
   		| TypIntH,TypIntS | TypIntS,TypIntH | TypIntS,TypIntS -> TypIntS
   		| _,TypIntMin | TypIntMin,_ -> TypIntMin

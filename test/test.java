@@ -1,6 +1,6 @@
 class test {
     public static void main(String[] a) {
-            System.out.println(1h+30s);
+            System.out.println(3h+3h);
     }
 }
 
