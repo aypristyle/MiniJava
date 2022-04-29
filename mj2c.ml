@@ -331,6 +331,9 @@ let type2c
   | TypIntMg -> fprintf out "mg"
   | TypIntg -> fprintf out "g"
   | TypIntCg -> fprintf out "cg"
+  | TypIntH -> fprintf out "h"
+  | TypIntMin -> fprintf out "min"
+  | TypIntS -> fprintf out "s"
   | TypIntArray -> fprintf out "struct %s*" !struct_array_name
   | Typ t -> fprintf out "struct %s*" t
 

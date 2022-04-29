@@ -70,6 +70,9 @@ and typ =
   | TypIntMg    (** Type integer of mg *)
   | TypIntCg    (** Type integer of cg *)
   | TypIntg    (** Type integer of g *)
+  | TypIntH    (** Type integer of h *)
+  | TypIntMin    (** Type integer of min *)
+  | TypIntS    (** Type integer of s *)
   | Typ of identifier (** A class type. *)
 
 and metho = {

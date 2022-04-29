@@ -65,6 +65,9 @@ and typ =
   | TypIntMg
   | TypIntCg
   | TypIntg
+  | TypIntH
+  | TypIntMin
+  | TypIntS
   | Typ of identifier
 
 and metho = {
