@@ -20,29 +20,33 @@ and raw_expression =
 and constant = LMJ.constant =
   | ConstBool of bool
   | ConstInt of int32
+  (* km hm dam m dm cm mm *)
   | ConstKm of int32
-  | ConstMm of int32
-  | ConstCm of int32
-  | Constm of int32
-  | ConstDam of int32
-  | ConstDm of int32
   | ConstHm of int32
+  | ConstDam of int32
+  | Constm of int32
+  | ConstDm of int32
+  | ConstCm of int32
+  | ConstMm of int32
+  (* kg hg dag g dg cg mg *)
   | ConstKg of int32
-  | ConstMg of int32
-  | ConstCg of int32
-  | Constg of int32
-  | ConstDag of int32
-  | ConstDg of int32
   | ConstHg of int32
+  | ConstDag of int32
+  | Constg of int32
+  | ConstDg of int32
+  | ConstCg of int32
+  | ConstMg of int32
+  (* kl hl dal l dl cl ml *)
   | ConstKl of int32
-  | ConstMl of int32
-  | ConstCl of int32
-  | Constl of int32
-  | ConstDal of int32
-  | ConstDl of int32
   | ConstHl of int32
-  | ConstMin of int32
+  | ConstDal of int32
+  | Constl of int32
+  | ConstDl of int32
+  | ConstCl of int32
+  | ConstMl of int32
+   (* h min s *)
   | ConstH of int32
+  | ConstMin of int32
   | ConstS of int32
 and binop = LMJ.binop =
   | OpAdd
@@ -54,7 +58,9 @@ and binop = LMJ.binop =
   | OpEquals
   | OpAnd
   | OpOr
-  
+  | OpDiv  
+ 
+
 
 and unop = LMJ.unop = 
   |UOpNot
@@ -73,27 +79,31 @@ and typ =
   | TypInt
   | TypBool
   | TypIntArray
+  (* km hm dam m dm cm mm *)
   | TypIntKm
-  | TypIntMm
-  | TypIntCm
-  | TypIntm
   | TypIntHm
   | TypIntDam
+  | TypIntm
   | TypIntDm
-  | TypIntKl
-  | TypIntMl
-  | TypIntCl
-  | TypIntl
-  | TypIntHl
-  | TypIntDal
-  | TypIntDl
+  | TypIntCm
+  | TypIntMm
+ (* kg hg dag g dg cg mg *)
   | TypIntKg
-  | TypIntMg
-  | TypIntCg
-  | TypIntg
   | TypIntHg
   | TypIntDag
+  | TypIntg
   | TypIntDg
+  | TypIntCg
+  | TypIntMg
+  (* kl hl dal l dl cl ml *)
+  | TypIntKl
+  | TypIntHl
+  | TypIntDal
+  | TypIntl
+  | TypIntDl
+  | TypIntCl
+  | TypIntMl
+  (* h min s *)
   | TypIntH
   | TypIntMin
   | TypIntS

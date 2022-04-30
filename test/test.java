@@ -1,9 +1,9 @@
 class test {
     public static void main(String[] a) {
-            System.out.println(3h+3h);
+            System.out.println(10hm+30dam);
     }
 }
 
 
-/*kg hg dag g dg cg mg*/ 
+
 

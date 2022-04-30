@@ -59,36 +59,119 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
   match typ1, typ2 with
   | TypInt, TypInt
   | TypBool, TypBool
+  (* km hm dam m dm cm mm *)
   | TypIntKm, TypIntKm
+  | TypIntHm, TypIntHm
+  | TypIntDam, TypIntDam
   | TypIntm, TypIntm
+  | TypIntDm, TypIntDm
   | TypIntCm, TypIntCm
   | TypIntMm, TypIntMm
+ 
+  | TypIntKm, TypIntHm
+  | TypIntKm, TypIntDam
   | TypIntKm, TypIntm
+  | TypIntKm, TypIntDm
+  | TypIntKm, TypIntCm
+  | TypIntKm, TypIntMm
+  
+  | TypIntHm, TypIntDam
+  | TypIntHm, TypIntm
+  | TypIntHm, TypIntDm
+  | TypIntHm, TypIntCm
+  | TypIntHm, TypIntMm
+  
+  | TypIntDam, TypIntm
+  | TypIntDam, TypIntDm
+  | TypIntDam, TypIntCm
+  | TypIntDam, TypIntMm
+  
+  | TypIntm, TypIntDm
   | TypIntm, TypIntCm
   | TypIntm, TypIntMm
-  | TypIntKm, TypIntMm
+  
+  | TypIntDm, TypIntCm
+  | TypIntDm, TypIntMm
+  
+  | TypIntCm, TypIntMm
+  
+  (* kg hg dag g dg cg mg *)
   | TypIntKg, TypIntKg
+  | TypIntHg, TypIntHg
+  | TypIntDag, TypIntDag
   | TypIntg, TypIntg
+  | TypIntDg, TypIntDg
   | TypIntCg, TypIntCg
   | TypIntMg, TypIntMg
+  
+  | TypIntKg, TypIntHg
+  | TypIntKg, TypIntDag
   | TypIntKg, TypIntg
+  | TypIntKg, TypIntDg
+  | TypIntKg, TypIntCg
+  | TypIntKg, TypIntMg
+  
+  | TypIntHg, TypIntDag
+  | TypIntHg, TypIntg
+  | TypIntHg, TypIntDg
+  | TypIntHg, TypIntCg
+  | TypIntHg, TypIntMg
+  
+  | TypIntDag, TypIntg
+  | TypIntDag, TypIntDg
+  | TypIntDag, TypIntCg
+  | TypIntDag, TypIntMg
+  
+  | TypIntg, TypIntDg
   | TypIntg, TypIntCg
   | TypIntg, TypIntMg
-  | TypIntKg, TypIntMg
+  
+  | TypIntDg, TypIntCg
+  | TypIntDg, TypIntMg
+  
+  | TypIntCg, TypIntMg
+  (* kl hl dal l dl cl ml *)
+  | TypIntKl, TypIntKl
+  | TypIntHl, TypIntHl
+  | TypIntDal, TypIntDal
+  | TypIntl, TypIntl
+  | TypIntDl, TypIntDl
+  | TypIntCl, TypIntCl
+  | TypIntMl, TypIntMl
+  
+  | TypIntKl, TypIntHl
+  | TypIntKl, TypIntDal
+  | TypIntKl, TypIntl
+  | TypIntKl, TypIntDl
+  | TypIntKl, TypIntCl
+  | TypIntKl, TypIntMl
+  
+  | TypIntHl, TypIntDal
+  | TypIntHl, TypIntl
+  | TypIntHl, TypIntDl
+  | TypIntHl, TypIntCl
+  | TypIntHl, TypIntMl
+  
+  | TypIntDal, TypIntl
+  | TypIntDal, TypIntDl
+  | TypIntDal, TypIntCl
+  | TypIntDal, TypIntMl
+  
+  | TypIntl, TypIntDl
+  | TypIntl, TypIntCl
+  | TypIntl, TypIntMl
+  
+  | TypIntDl, TypIntCl
+  | TypIntDl, TypIntMl
+  
+  | TypIntCl, TypIntMl
+  (* h min s *)
   | TypIntH,TypIntH
   | TypIntMin,TypIntMin
   | TypIntS,TypIntS
   | TypIntH, TypIntMin
   | TypIntH, TypIntS
   | TypIntS, TypIntMin
-  | TypIntKL, TypIntKL
-  | TypIntL, TypIntL
-  | TypIntCL, TypIntCL
-  | TypIntML, TypIntML
-  | TypIntKL, TypIntL
-  | TypIntL, TypIntCL
-  | TypIntL, TypIntML
-  | TypIntKL, TypIntML
   | TypIntArray, TypIntArray -> true
   | Typ t1, Typ t2 -> instanceof t1 t2
   | _, _ -> false
@@ -98,18 +181,31 @@ let rec compatible (typ1 : typ) (typ2 : typ) (instanceof : identifier -> identif
 let rec type_lmj_to_tmj = function
   | TypInt      -> TMJ.TypInt
   | TypBool     -> TMJ.TypBool
-  | TypIntMm    -> TMJ.TypIntMm
-  | TypIntCm    -> TMJ.TypIntCm
-  | TypIntm    -> TMJ.TypIntm
+   (* km hm dam m dm cm mm *)
   | TypIntKm     -> TMJ.TypIntKm
-  | TypIntMg    -> TMJ.TypIntMg
-  | TypIntCg    -> TMJ.TypIntCg
-  | TypIntg    -> TMJ.TypIntg
+  | TypIntHm    -> TMJ.TypIntHm
+  | TypIntDam    -> TMJ.TypIntDam
+  | TypIntm    -> TMJ.TypIntm
+  | TypIntDm    -> TMJ.TypIntDm
+  | TypIntCm    -> TMJ.TypIntCm
+  | TypIntMm    -> TMJ.TypIntMm
+  (* kg hg dag g dg cg mg *)
   | TypIntKg     -> TMJ.TypIntKg
-  | TypIntML    -> TMJ.TypIntML
-  | TypIntCL    -> TMJ.TypIntCL
-  | TypIntL    -> TMJ.TypIntL
-  | TypIntKL     -> TMJ.TypIntKL
+  | TypIntHg    -> TMJ.TypIntHg
+  | TypIntDag    -> TMJ.TypIntDag
+  | TypIntg    -> TMJ.TypIntg
+  | TypIntDg    -> TMJ.TypIntDg
+  | TypIntCg    -> TMJ.TypIntCg
+  | TypIntMg    -> TMJ.TypIntMg
+  (* kl hl dal l dl cl ml *)
+  | TypIntKl     -> TMJ.TypIntKl
+  | TypIntHl    -> TMJ.TypIntHl
+  | TypIntDal    -> TMJ.TypIntDal
+  | TypIntl    -> TMJ.TypIntl
+  | TypIntDl    -> TMJ.TypIntDl
+  | TypIntCl    -> TMJ.TypIntCl
+  | TypIntMl    -> TMJ.TypIntMl
+  (* h min s *)
   | TypIntH    -> TMJ.TypIntH
   | TypIntMin    -> TMJ.TypIntMin
   | TypIntS     -> TMJ.TypIntS
@@ -119,18 +215,31 @@ let rec type_lmj_to_tmj = function
 (** [typ_tmj_to_lmj s e t] converts the [TMJ] type [t] into the equivalent [LMJ] type using location starting position [s] and location ending position [e]. *)
 let rec type_tmj_to_lmj startpos endpos = function
 | TMJ.TypInt      -> TypInt
+ (* km hm dam m dm cm mm *)
 |TMJ.TypIntKm     -> TypIntKm
-|TMJ.TypIntMm     ->TypIntMm
+|TMJ.TypIntHm     -> TypIntHm
+|TMJ.TypIntDam     -> TypIntDam
+|TMJ.TypIntm     -> TypIntm
+|TMJ.TypIntDm     ->TypIntDm
 |TMJ.TypIntCm     ->TypIntCm
-|TMJ.TypIntm     ->TypIntm
+|TMJ.TypIntMm     ->TypIntMm
+(* kg hg dag g dg cg mg *)
 |TMJ.TypIntKg     -> TypIntKg
-|TMJ.TypIntMg     ->TypIntMg
+|TMJ.TypIntHg     -> TypIntHg
+|TMJ.TypIntDag     -> TypIntDag
+|TMJ.TypIntg     -> TypIntg
+|TMJ.TypIntDg     ->TypIntDg
 |TMJ.TypIntCg     ->TypIntCg
-|TMJ.TypIntg     ->TypIntg
-|TMJ.TypIntKL     -> TypIntKL
-|TMJ.TypIntML     ->TypIntML
-|TMJ.TypIntCL     ->TypIntCL
-|TMJ.TypIntL     ->TypIntL
+|TMJ.TypIntMg     ->TypIntMg
+(* kl hl dal l dl cl ml *)
+|TMJ.TypIntKl     -> TypIntKl
+|TMJ.TypIntHl     -> TypIntHl
+|TMJ.TypIntDal     -> TypIntDal
+|TMJ.TypIntl     -> TypIntl
+|TMJ.TypIntDl     ->TypIntDl
+|TMJ.TypIntCl     ->TypIntCl
+|TMJ.TypIntMl     ->TypIntMl
+(* h min s *)
 |TMJ.TypIntH     ->TypIntH
 |TMJ.TypIntMin     ->TypIntMin
 |TMJ.TypIntS     ->TypIntS
@@ -143,18 +252,31 @@ let rec tmj_type_to_string : TMJ.typ -> string = function
   | TMJ.TypInt -> "integer"
   | TMJ.TypBool -> "boolean"
   | TMJ.TypIntArray -> "int[]"
-  | TMJ.TypIntMm -> "mm"
+  (* km hm dam m dm cm mm *)
   | TMJ.TypIntKm -> "km"
-  | TMJ.TypIntCm -> "cm"
+  | TMJ.TypIntHm -> "hm"
+  | TMJ.TypIntDam -> "dam"
   | TMJ.TypIntm -> "m"
-  | TMJ.TypIntMg -> "mg"
+  | TMJ.TypIntDm -> "dm"
+  | TMJ.TypIntCm -> "cm"
+  | TMJ.TypIntMm -> "mm"
+  (* kg hg dag g dg cg mg *)
   | TMJ.TypIntKg -> "kg"
-  | TMJ.TypIntCg -> "cg"
+  | TMJ.TypIntHg -> "hg"
+  | TMJ.TypIntDag -> "dag"
   | TMJ.TypIntg -> "g"
-  | TMJ.TypIntML -> "ml"
-  | TMJ.TypIntKL -> "kl"
-  | TMJ.TypIntCL -> "cl"
-  | TMJ.TypIntL -> "l"
+  | TMJ.TypIntDg -> "dg"
+  | TMJ.TypIntCg -> "cg"
+  | TMJ.TypIntMg -> "mg"
+  (* kl hl dal l dl cl ml *)
+  | TMJ.TypIntKl -> "kl"
+  | TMJ.TypIntHl -> "hl"
+  | TMJ.TypIntDal -> "dal"
+  | TMJ.TypIntl -> "l"
+  | TMJ.TypIntDl -> "dl"
+  | TMJ.TypIntCl -> "cl"
+  | TMJ.TypIntMl -> "ml"
+  (* h min s *)
   | TMJ.TypIntH -> "h"
   | TMJ.TypIntMin -> "min"
   | TMJ.TypIntS -> "s"
@@ -223,39 +345,54 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   match Location.content e with
   | EConst (ConstBool b) -> 
       mke (TMJ.EConst (ConstBool b)) TypBool
-
   | EConst (ConstInt i) ->
       mke (TMJ.EConst (ConstInt i)) TypInt
+   (* km hm dam m dm cm mm *)
    | EConst (ConstKm i) ->
       mke (TMJ.EConst (ConstKm i)) TypIntKm
-   | EConst (ConstMm i) ->
-      mke (TMJ.EConst (ConstMm i)) TypIntMm
-   | EConst (ConstCm i) ->
-      mke (TMJ.EConst (ConstCm i)) TypIntCm
+   | EConst (ConstHm i) ->
+      mke (TMJ.EConst (ConstHm i)) TypIntHm
+   | EConst (ConstDam i) ->
+      mke (TMJ.EConst (ConstDam i)) TypIntDam
    | EConst (Constm i) ->
       mke (TMJ.EConst (Constm i)) TypIntm
-      
-
+   | EConst (ConstDm i) ->
+      mke (TMJ.EConst (ConstDm i)) TypIntDm
+   | EConst (ConstCm i) ->
+      mke (TMJ.EConst (ConstCm i)) TypIntCm
+   | EConst (ConstMm i) ->
+      mke (TMJ.EConst (ConstMm i)) TypIntMm
+   (* kg hg dag g dg cg mg *)
    | EConst (ConstKg i) ->
       mke (TMJ.EConst (ConstKg i)) TypIntKg
-   | EConst (ConstMg i) ->
-      mke (TMJ.EConst (ConstMm i)) TypIntMg
-   | EConst (ConstCg i) ->
-      mke (TMJ.EConst (ConstCg i)) TypIntCg
+   | EConst (ConstHg i) ->
+      mke (TMJ.EConst (ConstHg i)) TypIntHg
+   | EConst (ConstDag i) ->
+      mke (TMJ.EConst (ConstDag i)) TypIntDag
    | EConst (Constg i) ->
       mke (TMJ.EConst (Constg i)) TypIntg
-
-
-   | EConst (ConstKL i) ->
-      mke (TMJ.EConst (ConstKL i)) TypIntKL
-   | EConst (ConstML i) ->
-      mke (TMJ.EConst (ConstML i)) TypIntML
-   | EConst (ConstCL i) ->
-      mke (TMJ.EConst (ConstCL i)) TypIntCL
-   | EConst (ConstL i) ->
-      mke (TMJ.EConst (ConstL i)) TypIntL
-
-
+   | EConst (ConstDg i) ->
+      mke (TMJ.EConst (ConstDg i)) TypIntDg
+   | EConst (ConstCg i) ->
+      mke (TMJ.EConst (ConstCg i)) TypIntCg
+   | EConst (ConstMg i) ->
+      mke (TMJ.EConst (ConstMg i)) TypIntMg
+   (* kl hl dal l dl cl ml *)
+  | EConst (ConstKl i) ->
+      mke (TMJ.EConst (ConstKl i)) TypIntKl
+   | EConst (ConstHl i) ->
+      mke (TMJ.EConst (ConstHl i)) TypIntHl
+   | EConst (ConstDal i) ->
+      mke (TMJ.EConst (ConstDal i)) TypIntDal
+   | EConst (Constl i) ->
+      mke (TMJ.EConst (Constl i)) TypIntl
+   | EConst (ConstDl i) ->
+      mke (TMJ.EConst (ConstDl i)) TypIntDl
+   | EConst (ConstCl i) ->
+      mke (TMJ.EConst (ConstCl i)) TypIntCl
+   | EConst (ConstMl i) ->
+      mke (TMJ.EConst (ConstMl i)) TypIntMl
+   (* h min s *)
   | EConst (ConstH i) ->
       mke (TMJ.EConst (ConstH i)) TypIntH
    | EConst (ConstMin i) ->
@@ -295,22 +432,32 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   	let t = match e1'.typ, e2'.typ with
   	(*on vérifie les types des paramètres en entrée pour traiter le cas où on aurait une addition de km et m => on veut retourner des m*)
   		(* KM HM DAM M DM CM MM *)
-  		| TypIntKm,TypIntm | TypIntm,TypIntKm -> TypIntm
+  		| TypIntKm,TypIntKm -> TypIntKm
+  		| TypIntKm,TypIntHm | TypIntHm,TypIntKm -> TypIntHm
+  		| TypIntKm,TypIntDam | TypIntDam,TypIntKm | TypIntHm,TypIntDam | TypIntDam,TypIntHm -> TypIntDam
+  		| TypIntKm,TypIntm | TypIntm,TypIntKm | TypIntHm,TypIntm | TypIntm,TypIntHm | TypIntDam,TypIntm | TypIntm,TypIntDam-> TypIntm
+  		| TypIntKm,TypIntDm | TypIntDm,TypIntKm | TypIntHm,TypIntDm | TypIntDm,TypIntHm | TypIntDam,TypIntDm | TypIntDm,TypIntDam | TypIntm,TypIntDm | TypIntDm,TypIntm-> TypIntDm
+  		| TypIntKm,TypIntDm | TypIntDm,TypIntKm | TypIntHm,TypIntDm | TypIntDm,TypIntHm | TypIntDam,TypIntDm | TypIntDm,TypIntDam | TypIntm,TypIntDm | TypIntDm,TypIntm-> TypIntCm
+  		| TypIntKm,TypIntCm | TypIntCm,TypIntKm | TypIntHm,TypIntCm | TypIntCm,TypIntHm | TypIntDam,TypIntCm | TypIntCm,TypIntDam | TypIntm,TypIntCm | TypIntCm,TypIntm | TypIntDm,TypIntCm | TypIntCm,TypIntDm-> TypIntCm
+  		| TypIntKm,TypIntMm | TypIntMm,TypIntKm | TypIntHm,TypIntMm | TypIntMm,TypIntHm | TypIntDam,TypIntMm | TypIntMm,TypIntDam | TypIntm,TypIntMm | TypIntMm,TypIntm | TypIntDm,TypIntMm | TypIntMm,TypIntDm | TypIntCm,TypIntMm | TypIntMm,TypIntCm  -> TypIntMm
+  		
+  		(*
   		| TypIntMm,TypIntCm | TypIntCm,TypIntMm -> TypIntMm
   		| _,TypIntCm | TypIntCm,_ -> TypIntCm
   		| _,TypIntMm | TypIntMm,_ -> TypIntMm
   		| TypIntKm,TypIntKm  -> TypIntKm 
+  		*)
   		(* KG HG DAG G DG CG MG *)
   		| TypIntKg,TypIntg | TypIntg,TypIntKg -> TypIntg
   		| _,TypIntCg | TypIntCg,_ -> TypIntCg
   		| _,TypIntMg | TypIntMg,_ -> TypIntMg
   		| TypIntKg,TypIntKg  -> TypIntKg
   		(* KL HL DAL L DL CL ML *)
-  		| TypIntKL,TypIntL | TypIntL,TypIntKL -> TypIntL
-  		| TypIntML,TypIntCL | TypIntCL,TypIntML -> TypIntML
-  		| _,TypIntCL | TypIntCL,_ -> TypIntCL
-  		| _,TypIntML | TypIntML,_ -> TypIntML
-  		| TypIntKL,TypIntKL  -> TypIntKL 
+  		| TypIntKl,TypIntl | TypIntl,TypIntKl -> TypIntl
+  		| TypIntMl,TypIntCl | TypIntCl,TypIntMl -> TypIntMl
+  		| _,TypIntCl | TypIntCl,_ -> TypIntCl
+  		| _,TypIntMl | TypIntMl,_ -> TypIntMl
+  		| TypIntKl,TypIntKl  -> TypIntKl 
   		(* H Min S *)
   		| TypIntH,TypIntH -> TypIntH
   		| TypIntH,TypIntS | TypIntS,TypIntH | TypIntS,TypIntS -> TypIntS
@@ -336,11 +483,11 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   		| _,TypIntMg | TypIntMg,_ -> TypIntMg
   		| TypIntKg,TypIntKg  -> TypIntKg
   		(* KL HL DAL L DL CL ML *)
-  		| TypIntKL,TypIntL | TypIntL,TypIntKL -> TypIntL
-  		| TypIntML,TypIntCL | TypIntCL,TypIntML -> TypIntML
-  		| _,TypIntCL | TypIntCL,_ -> TypIntCL
-  		| _,TypIntML | TypIntML,_ -> TypIntML
-  		| TypIntKL,TypIntKL  -> TypIntKL 
+  		| TypIntKl,TypIntl | TypIntl,TypIntKl -> TypIntl
+  		| TypIntMl,TypIntCl | TypIntCl,TypIntMl -> TypIntMl
+  		| _,TypIntCl | TypIntCl,_ -> TypIntCl
+  		| _,TypIntMl | TypIntMl,_ -> TypIntMl
+  		| TypIntKl,TypIntKl  -> TypIntKl  
   		(* H Min S *)
   		| TypIntH,TypIntH -> TypIntH
   		| TypIntH,TypIntS | TypIntS,TypIntH | TypIntS,TypIntS -> TypIntS
@@ -366,11 +513,11 @@ and typecheck_expression (cenv : class_env) (venv : variable_env) (vinit : S.t)
   		| _,TypIntMg | TypIntMg,_ -> TypIntMg
   		| TypIntKg,TypIntKg  -> TypIntKg
   		(* KL HL DAL L DL CL ML *)
-  		| TypIntKL,TypIntL | TypIntL,TypIntKL -> TypIntL
-  		| TypIntML,TypIntCL | TypIntCL,TypIntML -> TypIntML
-  		| _,TypIntCL | TypIntCL,_ -> TypIntCL
-  		| _,TypIntML | TypIntML,_ -> TypIntML
-  		| TypIntKL,TypIntKL  -> TypIntKL 
+  		| TypIntKl,TypIntl | TypIntl,TypIntKl -> TypIntl
+  		| TypIntMl,TypIntCl | TypIntCl,TypIntMl -> TypIntMl
+  		| _,TypIntCl | TypIntCl,_ -> TypIntCl
+  		| _,TypIntMl | TypIntMl,_ -> TypIntMl
+  		| TypIntKl,TypIntKl  -> TypIntKl 
   		(* H Min S *)
   		| TypIntH,TypIntH -> TypIntH
   		| TypIntH,TypIntS | TypIntS,TypIntH | TypIntS,TypIntS -> TypIntS
@@ -475,7 +622,7 @@ let rec typecheck_instruction (cenv : class_env) (venv : variable_env) (vinit : 
     **) 
      | ISyso e ->
      let e1 = typecheck_expression cenv venv vinit instanceof e in 
-     if e1.typ= TMJ.TypInt || e1.typ=TMJ.TypIntKm || e1.typ=TMJ.TypIntMm || e1.typ=TMJ.TypIntm || e1.typ=TMJ.TypIntCm || e1.typ=TMJ.TypIntKg || e1.typ=TMJ.TypIntMg || e1.typ=TMJ.TypIntg || e1.typ=TMJ.TypIntCg || e1.typ=TMJ.TypIntH || e1.typ=TMJ.TypIntMin || e1.typ=TMJ.TypIntS then (TMJ.ISyso e1, vinit) else error e "Not good"
+     if e1.typ= TMJ.TypInt || e1.typ=TMJ.TypIntKm || e1.typ=TMJ.TypIntHm || e1.typ=TMJ.TypIntDam|| e1.typ=TMJ.TypIntm || e1.typ=TMJ.TypIntDm ||e1.typ=TMJ.TypIntCm || e1.typ=TMJ.TypIntMm || e1.typ=TMJ.TypIntKg || e1.typ=TMJ.TypIntHg || e1.typ=TMJ.TypIntDag || e1.typ=TMJ.TypIntg || e1.typ=TMJ.TypIntDg|| e1.typ=TMJ.TypIntCg || e1.typ=TMJ.TypIntMg ||e1.typ=TMJ.TypIntKl || e1.typ=TMJ.TypIntHl || e1.typ=TMJ.TypIntDal || e1.typ=TMJ.TypIntl || e1.typ=TMJ.TypIntDl || e1.typ=TMJ.TypIntCl || e1.typ=TMJ.TypIntMl ||e1.typ=TMJ.TypIntH || e1.typ=TMJ.TypIntMin || e1.typ=TMJ.TypIntS then (TMJ.ISyso e1, vinit) else error e "Not good"
 
 (** [occurences x bindings] returns the elements in [bindings] that have [x] has identifier. *)
 let occurrences (x : string) (bindings : (identifier * 'a) list) : identifier list =
