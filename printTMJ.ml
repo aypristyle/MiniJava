@@ -81,6 +81,8 @@ let binop out = function
      fprintf out "||"
   | OpPower ->
      fprintf out "**"
+   | OpDiv ->
+     fprintf out "/"
 
 (** [expr out e], [expr0 out e], ..., [expr6 out e] print the expression [e]
     on the output channel [out]. [expr] is a synonym for [expr6].
@@ -138,7 +140,7 @@ and expr2 out e = match e.raw_expression with
      expr1 out e
 
 and expr3 out e = match e.raw_expression with 
-  | EBinOp ((OpMul | OpPower )as op, e1, e2) ->
+  | EBinOp ((OpMul | OpPower | OpDiv )as op, e1, e2) ->
      fprintf out "%a %a %a"
        expr3 e1
        binop op
@@ -214,12 +216,25 @@ let typ out = function
      fprintf out "boolean"
   |TypIntKm ->
     fprintf out "km"
+  |TypIntDm ->
+    fprintf out "dm"
+  |TypIntDam ->
+    fprintf out "dam"
+  |TypIntHm ->
+    fprintf out "hm"
   |TypIntMm ->
     fprintf out "mm"
   |TypIntCm ->
     fprintf out "cm"
   |TypIntm ->
     fprintf out "m"
+    
+  |TypIntDg ->
+    fprintf out "dg"
+  |TypIntDag ->
+    fprintf out "dag"
+  |TypIntHg ->
+    fprintf out "hg"    
   |TypIntKg ->
     fprintf out "kg"
   |TypIntMg ->
@@ -228,6 +243,29 @@ let typ out = function
     fprintf out "cg"
   |TypIntg ->
     fprintf out "g"
+    
+  |TypIntDl ->
+    fprintf out "dl"
+  |TypIntDal ->
+    fprintf out "dal"
+  |TypIntHl ->
+    fprintf out "hl"    
+  |TypIntKl ->
+    fprintf out "kl"
+  |TypIntMl ->
+    fprintf out "ml"
+  |TypIntCl ->
+    fprintf out "cl"
+  |TypIntl ->
+    fprintf out "l"
+    
+  |TypIntH ->
+    fprintf out "h"
+  |TypIntMin ->
+    fprintf out "min"
+  |TypIntS ->
+    fprintf out "s"
+    
   | TypIntArray ->
      fprintf out "int[]"
   | Typ id ->

@@ -143,6 +143,8 @@ let print_binop out = function
      fprintf out "OpOr"
   | OpPower ->
     fprintf out "OpPower"
+   | OpDiv ->
+    fprintf out "OpDiv"
 
 (** [print_expression prefix out e] prints the expression [e] on the output channel [out].
     [prefix] is the string already printed just before [e]. *)
@@ -335,6 +337,12 @@ let print_type out typ =
      fprintf out "dal"
   | TypBool ->
      fprintf out "bool"
+   | TypIntS ->
+     fprintf out "s"
+  | TypIntMin ->
+     fprintf out "min"
+  | TypIntH ->
+     fprintf out "h"
   | TypIntArray ->
      fprintf out "int[]"
   | Typ id ->

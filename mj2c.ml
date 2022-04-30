@@ -333,6 +333,7 @@ let binop2c
   | OpAnd -> fprintf out "&&"
   | OpOr -> fprintf out "||"
   | OpEquals -> fprintf out "=="
+  | OpDiv -> fprintf out "/"
   
 
 (** [type2c out typ] transpiles the type [typ] to C on the output channel [out]. *)
@@ -486,6 +487,10 @@ let expr2c
     | EUnOp (UopIncr, e) ->
        fprintf out "++(%a)"
          expr2c e
+         
+    | EUnOp (UopDecr, e) ->
+       fprintf out "--(%a)"
+         expr2c e
 
     | EBinOp(OpPower, e1,e2) ->     	
     fprintf out "(int)pow(%a,%a)"
@@ -586,6 +591,7 @@ let expr2c
          				expr2c e1
         				binop2c OpAdd
          				expr2c e2
+         	| _,_ -> fprintf out "error vous essayer d'additionner des unitées non compatibles"			
          	
          end
          
@@ -680,7 +686,9 @@ let expr2c
          	| TypIntS,TypIntH  -> fprintf out "(%a %a (%a)*3600)"
          				expr2c e1
         				binop2c OpSub
-         				expr2c e2			
+         				expr2c e2	
+         	
+         	| _,_ -> fprintf out "error vous essayer de soustraire des unitées non compatibles"					
          	
          end
          
@@ -777,6 +785,8 @@ let expr2c
          				expr2c e1
         				binop2c OpMul
          				expr2c e2
+         			
+         	| _,_ -> fprintf out "error vous essayer de multiplier des unitées non compatibles"			
          	
          end
          

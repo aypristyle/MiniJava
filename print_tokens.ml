@@ -84,6 +84,10 @@ let print_token show_loc out = function
      fprintf out "RBRACE"
   | THIS ->
      fprintf out "THIS"
+  | DIV ->
+     fprintf out "DIV"
+  | EQUALS ->
+     fprintf out "EQUALS"
   | NEW ->
      fprintf out "NEW"
   | DOT ->
