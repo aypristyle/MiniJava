@@ -20,7 +20,12 @@ let constant out = function
      fprintf out "%ld cm " i 
    | Constm i ->
      fprintf out "%ld m " i 
-
+  | ConstDm i ->
+     fprintf out "%ld dm " i 
+   | ConstDam i ->
+     fprintf out "%ld dam " i 
+   | ConstHm i ->
+     fprintf out "%ld hm " i 
   | ConstKg i ->
      fprintf out "%ld kg " i 
   | ConstMg i ->
@@ -28,7 +33,33 @@ let constant out = function
    | ConstCg i ->
      fprintf out "%ld cg " i 
    | Constg i ->
-     fprintf out "%ld g " i 
+     fprintf out "%ld g " i
+  | ConstDg i ->
+     fprintf out "%ld dg " i 
+   | ConstDag i ->
+     fprintf out "%ld dag " i 
+   | ConstHg i ->
+     fprintf out "%ld hg " i  
+  | ConstKl i ->
+     fprintf out "%ld kl " i 
+  | ConstMl i ->
+     fprintf out "%ld ml " i 
+   | ConstCl i ->
+     fprintf out "%ld cl " i 
+   | Constl i ->
+     fprintf out "%ld l " i
+  | ConstDl i ->
+     fprintf out "%ld dl " i 
+   | ConstDal i ->
+     fprintf out "%ld dal " i 
+   | ConstHl i ->
+     fprintf out "%ld hl " i
+  | ConstMin i ->
+     fprintf out "%ld min " i 
+   | ConstS i ->
+     fprintf out "%ld s " i 
+   | ConstH i ->
+     fprintf out "%ld h " i 
 
 (** [binop out op] prints the binary operator [op] on the output channel [out]. *)
 let binop out = function
@@ -99,6 +130,9 @@ and expr2 out e = match e.raw_expression with
        expr2 e
   | EUnOp (UopIncr, e) ->
      fprintf out "%a++"
+       expr2 e
+  | EUnOp (UopDecr, e) ->
+     fprintf out "%a--"
        expr2 e
   | _ ->
      expr1 out e

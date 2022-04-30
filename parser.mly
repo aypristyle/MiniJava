@@ -9,8 +9,8 @@
 %token <string Location.t> IDENT
 %token CLASS PUBLIC STATIC VOID MAIN STRING EXTENDS RETURN
 %token INCR DECR
-%token POWER KM MM CM M KG MG CG G KL ML CL L S H MIN
-%token PLUS MINUS TIMES NOT LT AND GT OR EQUALS DIV DIVENT TO_KM
+%token POWER KM HM DAM DM MM CM M KG MG HG DAG DG CG G KL ML DL DAL HL CL L S H MIN
+%token PLUS MINUS TIMES NOT LT AND GT OR EQUALS DIV  
 %token COMMA SEMICOLON
 %token ASSIGN
 %token LPAREN RPAREN LBRACKET RBRACKET LBRACE RBRACE
@@ -26,7 +26,7 @@
 %left TIMES
 %left POWER
 %nonassoc NOT
-%nonassoc INCR
+%nonassoc INCR DECR
 %nonassoc DOT LBRACKET
 
 %start program
@@ -125,10 +125,39 @@ raw_expression:
   
 | i=INT_CONST CM
   {EConst (ConstCm i)}  
+
+| i=INT_CONST DAM
+  {EConst (ConstDam i)}
+
+| i=INT_CONST HM
+  {EConst (ConstHm i)}  
+  
+| i=INT_CONST DM
+  {EConst (ConstDm i)}  
   
 | i=INT_CONST M
   {EConst (Constm i)}  
+
+| i=INT_CONST KL
+  {EConst (ConstKl i)}
+
+| i=INT_CONST ML
+  {EConst (ConstMl i)}  
   
+| i=INT_CONST CL
+  {EConst (ConstCl i)}  
+  
+| i=INT_CONST L
+  {EConst (Constl i)}  
+  
+| i=INT_CONST DAL
+  {EConst (ConstDal i)}
+
+| i=INT_CONST HL
+  {EConst (ConstHl i)}  
+  
+| i=INT_CONST DL
+  {EConst (ConstDl i)}  
 
 | i=INT_CONST KG
   {EConst (ConstKg i)}
@@ -141,6 +170,24 @@ raw_expression:
   
 | i=INT_CONST G
   {EConst (Constg i)}  
+
+| i=INT_CONST DAG
+  {EConst (ConstDag i)}
+
+| i=INT_CONST HG
+  {EConst (ConstHg i)}  
+  
+| i=INT_CONST DG
+  {EConst (ConstDg i)}  
+
+| i=INT_CONST H
+  {EConst (ConstH i)}
+
+| i=INT_CONST S
+  {EConst (ConstS i)}  
+  
+| i=INT_CONST MIN
+  {EConst (ConstMin i)}  
   
 | b = BOOL_CONST
    { EConst (ConstBool b) }
@@ -173,6 +220,8 @@ raw_expression:
    { EUnOp (UOpNot, e) }
 | e  = expression INCR
   { EUnOp (UopIncr,e)}
+| e  = expression DECR
+  { EUnOp (UopDecr,e)}
 %inline binop:
 | PLUS  { OpAdd }
 | MINUS { OpSub }
@@ -183,6 +232,8 @@ raw_expression:
 | EQUALS { OpEquals }
 | AND   { OpAnd }
 | OR    { OpOr }
+| DIV {OpDiv}
+
 
 
 instruction:
@@ -225,7 +276,19 @@ typ:
 | INTEGER M
    {TypIntm}
    
-|INTEGER KG
+|INTEGER DAM
+   {TypIntDam}
+   
+| INTEGER HM
+   {TypIntHm}
+   
+| INTEGER DM
+   {TypIntDm}
+   
+| INTEGER G
+   {TypIntg}
+
+ |INTEGER KG
    {TypIntKg}
 | INTEGER MG
    {TypIntMg}
@@ -233,22 +296,46 @@ typ:
    {TypIntCg}
 | INTEGER G
    {TypIntg}
-   
-|INTEGER KL
-   {TypIntKL}
-| INTEGER ML
-   {TypIntML}
-| INTEGER CL
-   {TypIntCL}
-| INTEGER L
-   {TypIntL}
 
-| INTEGER H
-   {TypIntH}  
-| INTEGER MIN
-   {TypIntMin} 
+ |INTEGER DAG
+   {TypIntDag}
+| INTEGER HG
+   {TypIntHg}
+   
+| INTEGER DG
+   {TypIntDg}
+
+| INTEGER L
+   {TypIntl}
+
+ |INTEGER KL
+   {TypIntKl}
+| INTEGER ML
+   {TypIntMl}
+   
+| INTEGER CL
+   {TypIntCl}
+   
+| INTEGER L
+   {TypIntl}
+
+|INTEGER DAL
+   {TypIntDal}
+
+| INTEGER HL
+   {TypIntHl}
+   
+| INTEGER DL
+   {TypIntDl}
+
+ |INTEGER MIN
+   {TypIntMin}
+
 | INTEGER S
    {TypIntS}
    
+| INTEGER H
+   {TypIntH}
+
 | id = IDENT
    { Typ id }

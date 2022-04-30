@@ -68,6 +68,12 @@ let print_constant out = function
      fprintf out "ConstMm %ld" k
   | ConstCm k ->
      fprintf out "ConstCm %ld" k
+  | ConstHm k ->
+     fprintf out "ConstHm %ld" k
+  | ConstDam k ->
+     fprintf out "ConstDam %ld" k
+  | ConstDm k ->
+     fprintf out "ConstDm %ld" k
   | Constm k ->
      fprintf out "Constm %ld" k
   | ConstKm k ->
@@ -80,6 +86,33 @@ let print_constant out = function
      fprintf out "Constg %ld" k
   | ConstKg k ->
      fprintf out "ConstKg %ld" k
+  | ConstHg k ->
+     fprintf out "ConstHg %ld" k
+  | ConstDag k ->
+     fprintf out "ConstDag %ld" k
+  | ConstDg k ->
+     fprintf out "ConstDg %ld" k
+  | ConstMl k ->
+     fprintf out "ConstMl %ld" k
+  | ConstCl k ->
+     fprintf out "ConstCl %ld" k
+  | Constl k ->
+     fprintf out "Constl %ld" k
+  | ConstKl k ->
+     fprintf out "ConstKl %ld" k
+  | ConstHl k ->
+     fprintf out "ConstHl %ld" k
+  | ConstDal k ->
+     fprintf out "ConstDal %ld" k
+  | ConstDl k ->
+     fprintf out "ConstDl %ld" k
+  | ConstH k ->
+     fprintf out "ConstH %ld" k
+  | ConstS k ->
+     fprintf out "ConstS %ld" k
+  | ConstMin k ->
+     fprintf out "ConstMin %ld" k
+
 
 (** [print_unop out op] prints the unary operator [op] on the output channel [out]. *)
 let print_unop out = function
@@ -87,6 +120,8 @@ let print_unop out = function
      fprintf out "UOpNot"
   | UopIncr ->
      fprintf out "UopIncr"
+  | UopDecr ->
+     fprintf out "UopDecr"
 
 (** [print_binop out op] prints the binary operator [op] on the output channel [out]. *)
 let print_binop out = function
@@ -264,6 +299,12 @@ let print_type out typ =
      fprintf out "cm"
   | TypIntm ->
      fprintf out "m"
+  | TypIntHm ->
+     fprintf out "hm"
+  | TypIntDm ->
+     fprintf out "dm"
+  | TypIntDam ->
+     fprintf out "dam"
   | TypIntKg ->
      fprintf out "kg"
   | TypIntMg ->
@@ -272,6 +313,26 @@ let print_type out typ =
      fprintf out "cg"
   | TypIntg ->
      fprintf out "g"
+  | TypIntHg ->
+     fprintf out "hg"
+  | TypIntDg ->
+     fprintf out "dg"
+  | TypIntDag ->
+     fprintf out "dag"
+  | TypIntKl ->
+     fprintf out "kl"
+  | TypIntMl ->
+     fprintf out "ml"
+  | TypIntCl ->
+     fprintf out "cl"
+  | TypIntl ->
+     fprintf out "l"
+  | TypIntHl ->
+     fprintf out "hl"
+  | TypIntDl ->
+     fprintf out "dl"
+  | TypIntDal ->
+     fprintf out "dal"
   | TypBool ->
      fprintf out "bool"
   | TypIntArray ->

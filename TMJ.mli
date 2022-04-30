@@ -18,24 +18,32 @@ and raw_expression =
   | EObjectAlloc of identifier
 
 and constant = LMJ.constant =
-  | ConstBool of bool (** Boolean constant [true] or [false]. *)
-  | ConstInt of int32 (** Integer constant [[-2^31, 2^31 - 1]]. *)
-  | ConstKm of int32 (** Km constant**)
-  | ConstMm of int32 (** Mm constant **)
-  | ConstCm of int32 (** Cm constant **)
-  | Constm of int32 (** m constant **)
-  | ConstKg of int32 (** Kg constant**)
-  | ConstMg of int32 (** Mg constant **)
-  | ConstCg of int32 (** Cg constant **)
-  | Constg of int32 (** g constant **)
-  | ConstKL of int32 (** Kl constant**)
-  | ConstML of int32 (** Ml constant **)
-  | ConstCL of int32 (** Cl constant **)
-  | ConstL of int32 (** l constant **)
-  | ConstH of int32 (** h constant **)
-  | ConstMin of int32 (** min constant **)
-  | ConstS of int32 (** s constant **)
-
+  | ConstBool of bool
+  | ConstInt of int32
+  | ConstKm of int32
+  | ConstMm of int32
+  | ConstCm of int32
+  | Constm of int32
+  | ConstDam of int32
+  | ConstDm of int32
+  | ConstHm of int32
+  | ConstKg of int32
+  | ConstMg of int32
+  | ConstCg of int32
+  | Constg of int32
+  | ConstDag of int32
+  | ConstDg of int32
+  | ConstHg of int32
+  | ConstKl of int32
+  | ConstMl of int32
+  | ConstCl of int32
+  | Constl of int32
+  | ConstDal of int32
+  | ConstDl of int32
+  | ConstHl of int32
+  | ConstMin of int32
+  | ConstH of int32
+  | ConstS of int32
 and binop = LMJ.binop =
   | OpAdd
   | OpSub
@@ -51,6 +59,7 @@ and binop = LMJ.binop =
 and unop = LMJ.unop = 
   |UOpNot
   |UopIncr
+  |UopDecr
 
 and instruction =
   | IBlock of instruction list
@@ -68,14 +77,23 @@ and typ =
   | TypIntMm
   | TypIntCm
   | TypIntm
+  | TypIntHm
+  | TypIntDam
+  | TypIntDm
+  | TypIntKl
+  | TypIntMl
+  | TypIntCl
+  | TypIntl
+  | TypIntHl
+  | TypIntDal
+  | TypIntDl
   | TypIntKg
   | TypIntMg
   | TypIntCg
   | TypIntg
-  | TypIntKL
-  | TypIntML
-  | TypIntCL
-  | TypIntL
+  | TypIntHg
+  | TypIntDag
+  | TypIntDg
   | TypIntH
   | TypIntMin
   | TypIntS
